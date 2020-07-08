@@ -2,12 +2,12 @@
 <html>
 
 <head>
-  <title>Shopping Web</title>
+  <title>Log in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/home.css">
-
+  <link rel="stylesheet" href="css/loginpage.css">
+  <link rel="stylesheet" href="css/home.css">
 </head>
-
 <body>
 
   <a class="navbar-brand" href="#">Logo</a>
@@ -77,14 +77,78 @@
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
-
     </div>
   </nav>
 
+  <!-- Login component -->
+  <div class="container">
+    <div class="login-register-form">
+      <div class="panel-heading">
+        <h2 style="padding:20px;" >ACCOUNT</h2>
+        <div class="row">
+          <div class="col-xs-6">
+            <a href="#" class="active" onclick="showLogin();" id="login-view-btn">Login</a>
+          </div>
+          <div class="col-xs-6">
+            <a href="#" onclick="showRegister();" id="register-view-btn">Register</a>
+          </div>
+        </div>
+      </div>
+      <div class="login-container" id="login-container">
+        <form class="login-form">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+      <!-- Register component -->
+      <div class="register-container" id="register-container">
+        <form class="login-form">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">First Name</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First name" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Last name</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Last name" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" placeholder="password" id="exampleInputPassword1">
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
 
+    </div>
+  </div>
+  <script type="text/javascript">
+    showLogin();
 
-  <h1 class="hi">Hello</h1>
+    function showLogin() { //disable register and enable log in, change font sizes
+      document.getElementById('register-container').style.display = 'none';
+      document.getElementById('login-container').style.display = '';
+      document.getElementById('login-view-btn').style.fontSize = 'large';
+      document.getElementById('register-view-btn').style.fontSize = 'small';
+    }
 
+    function showRegister() { //disable login  and enable register
+      document.getElementById('register-container').style.display = '';
+      document.getElementById('login-container').style.display = 'none';
+      document.getElementById('register-view-btn').style.fontSize = 'large';
+      document.getElementById('login-view-btn').style.fontSize = 'small';
+    }
+  </script>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

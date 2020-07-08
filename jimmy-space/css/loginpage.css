@@ -1,0 +1,63 @@
+/* styling for login/register container */
+.form-control {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.login-form {
+  width: min-content;
+  margin: 0 auto;
+}
+
+.login-container,
+.register-container {
+  position: relative;
+  top: 40px;
+}
+
+/* styling for login/register button options */
+.row {
+  display: inline-flex;
+}
+
+#login-view-btn,
+#register-view-btn {
+  padding: 0px 20px;
+  color: black
+}
+
+.panel-heading {
+  margin: auto;
+  text-align: center;
+}
+
+/* login/register btn styling */
+.btn-primary {
+  color: #fff;
+  background-color: black;
+  border-color: black;
+  width: 400px;
+}
+
+.btn-primary:hover {
+  background-color: black;
+  border-color: black;
+}
+
+.login-register-form{
+  position: relative;
+  top: 50px;
+}
+
+@media screen and (max-width:768px){
+  .btn-primary {
+    width: 100%;
+  }
+  .form-control {
+    width: 100%;
+  }
+  .login-form {
+    width: unset;
+    margin: 0 auto;
+  }
+}
