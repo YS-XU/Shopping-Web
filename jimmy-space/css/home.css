@@ -1,0 +1,19 @@
+h1.hi{
+    text-align: center;
+}
+
+a.navbar-brand{
+    color: black;
+    text-align: center;
+    display: block;
+    font-size: 50px;
+}
+
+/* nav{
+    height: 70px;
+} */
+
+li.nav-item{
+    font-size: large;
+    margin-left: 50px;
+}
