@@ -1,4 +1,8 @@
 /* styling for login/register container */
+body{
+  font-family: 'Fira Sans', sans-serif;
+}
+
 .form-control {
   width: 400px;
   margin: 0 auto;
@@ -58,6 +62,10 @@
   top: 50px;
 }
 
+.prompt-msg{
+  font-size: 12px;
+}
+
 @media screen and (max-width:768px){
   .btn-primary {
     width: 100%;
@@ -67,6 +75,6 @@
   }
   .login-form {
     width: unset;
-    margin: 0 auto;
+    margin-bottom: 30px;
   }
 }
