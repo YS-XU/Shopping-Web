@@ -1,4 +1,8 @@
 /* styling for login/register container */
+body{
+  font-family: 'Fira Sans', sans-serif;
+}
+
 .form-control {
   width: 400px;
   margin: 0 auto;
@@ -23,7 +27,9 @@
 #login-view-btn,
 #register-view-btn {
   padding: 0px 20px;
-  color: black
+  color: black;
+  border-bottom: 2px solid black;
+  text-decoration: none;
 }
 
 .panel-heading {
@@ -39,7 +45,14 @@
   width: 400px;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:disabled,
+.open > .dropdown-toggle.btn-one {
+  color: #333;
   background-color: black;
   border-color: black;
 }
@@ -47,6 +60,10 @@
 .login-register-form{
   position: relative;
   top: 50px;
+}
+
+.prompt-msg{
+  font-size: 12px;
 }
 
 @media screen and (max-width:768px){
@@ -58,6 +75,6 @@
   }
   .login-form {
     width: unset;
-    margin: 0 auto;
+    margin-bottom: 30px;
   }
 }

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="css/loginpage.css">
   <link rel="stylesheet" href="css/home.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -79,7 +80,6 @@
       </form>
     </div>
   </nav>
-
   <!-- Login component -->
   <div class="container">
     <div class="login-register-form">
@@ -88,6 +88,7 @@
         <div class="row">
           <div class="col-xs-6">
             <a href="#" class="active" onclick="showLogin();" id="login-view-btn">Login</a>
+
           </div>
           <div class="col-xs-6">
             <a href="#" onclick="showRegister();" id="register-view-btn">Register</a>
@@ -97,56 +98,90 @@
       <div class="login-container" id="login-container">
         <form class="login-form">
           <div class="form-group">
+            <p class="prompt-msg">Sign in with your email and password.</p>
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" class="form-control" id="exampleInputPassword1" required>
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
       </div>
+
       <!-- Register component -->
       <div class="register-container" id="register-container">
         <form class="login-form">
+          <p class="prompt-msg">Welcome, create an account with us!</p>
           <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp" required>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">First Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First name" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First name" aria-describedby="emailHelp" required>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Last name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Last name" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Last name" aria-describedby="emailHelp" required>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" placeholder="password" id="exampleInputPassword1">
+            <input type="password" onchange="checkIfMatch();" class="form-control" placeholder="password" id="password1" required>
           </div>
-          <button type="submit" class="btn btn-primary">Register</button>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Re-enter Password</label>
+            <input type="password" onchange="checkIfMatch();"  class="form-control" placeholder="password" id="password2" required>
+            <div class="" id="password-error-container" >
+              <span style="color:red;">Passwords do not match!</span>
+            </div>
+          </div>
+          <button id="register-btn" type="submit" class="btn btn-primary">Register</button>
         </form>
       </div>
 
     </div>
   </div>
   <script type="text/javascript">
-    showLogin();
 
-    function showLogin() { //disable register and enable log in, change font sizes
-      document.getElementById('register-container').style.display = 'none';
-      document.getElementById('login-container').style.display = '';
-      document.getElementById('login-view-btn').style.fontSize = 'large';
-      document.getElementById('register-view-btn').style.fontSize = 'small';
+    // Get the elements in the document
+    var error_span_msg = document.getElementById('password-error-container'); //Get the span div for error messsage
+    var register_btn = document.getElementById('register-btn'); //register button
+    var register_container = document.getElementById('register-container'); //register container
+    var login_container = document.getElementById('login-container') // login container
+    var register_view_button = document.getElementById('register-view-btn'); //register view button
+    var login_view_button = document.getElementById('login-view-btn') //login view button
+    showLogin(); //Show login first
+    hideSpan(); // Hide the error message span
+
+    function checkIfMatch(){
+      if(document.getElementById('password1').value !== document.getElementById('password2').value){ //if both password fields dont match then ... display the error message, disable the register button
+          error_span_msg.style.display = '';
+          register_btn.disabled = true;
+      }
+      else{
+        error_span_msg.style.display = 'none'; //else enable the register button and hide the error message
+        register_btn.disabled = false;
+      }
     }
 
-    function showRegister() { //disable login  and enable register
-      document.getElementById('register-container').style.display = '';
-      document.getElementById('login-container').style.display = 'none';
-      document.getElementById('register-view-btn').style.fontSize = 'large';
-      document.getElementById('login-view-btn').style.fontSize = 'small';
+    function hideSpan(){ //Function to hide the span
+      error_span_msg.style.display = 'none';
+    }
+
+    function showLogin() { //disable register and enable log in, change font sizes -- change bottom border
+      register_container.style.display = 'none';
+      login_container.style.display = '';
+      login_view_button.style.borderBottom = "3px solid black";
+      register_view_button.style.borderBottom = "1px solid grey"
+    }
+
+    function showRegister() { //disable login  and enable register -- change the bottom border
+      register_container.style.display = '';
+      login_container.style.display = 'none';
+      register_view_button.style.borderBottom = "3px solid black";
+      login_view_button.style.borderBottom = "1px solid grey"
     }
   </script>
 
