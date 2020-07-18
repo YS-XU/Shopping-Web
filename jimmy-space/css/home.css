@@ -17,3 +17,29 @@ li.nav-item{
     font-size: large;
     margin-left: 50px;
 }
+
+nav.account{
+    text-align: right;
+}
+
+li.nav-item{
+    font-size: large;
+    margin-left: 50px;
+}
+
+ul.account{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+li.account{
+    display: inline;
+    margin-right: 20px;
+}
+
+a.account{
+    color: gray;
+    font-size: x-large;
+    margin: 10px;
+}
