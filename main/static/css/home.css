@@ -10,7 +10,6 @@ a.navbar-brand{
 }
 
 
-
 nav.account{
     text-align: right;
 }
@@ -35,10 +34,6 @@ a.account{
     color: gray;
     font-size: x-large;
     margin: 10px;
-}
-
-img {
-    width: 100%;
 }
 
 

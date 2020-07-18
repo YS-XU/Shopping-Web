@@ -1,0 +1,80 @@
+/* styling for login/register container */
+body{
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.form-control {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.login-form {
+  width: min-content;
+  margin: 0 auto;
+}
+
+.login-container,
+.register-container {
+  position: relative;
+  top: 40px;
+}
+
+/* styling for login/register button options */
+.row {
+  display: inline-flex;
+}
+
+#login-view-btn,
+#register-view-btn {
+  padding: 0px 20px;
+  color: black;
+  border-bottom: 2px solid black;
+  text-decoration: none;
+}
+
+.panel-heading {
+  margin: auto;
+  text-align: center;
+}
+
+/* login/register btn styling */
+.btn-primary {
+  color: #fff;
+  background-color: black;
+  border-color: black;
+  width: 400px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:disabled,
+.open > .dropdown-toggle.btn-one {
+  color: #333;
+  background-color: black;
+  border-color: black;
+}
+
+.login-register-form{
+  position: relative;
+  top: 50px;
+}
+
+.prompt-msg{
+  font-size: 12px;
+}
+
+@media screen and (max-width:768px){
+  .btn-primary {
+    width: 100%;
+  }
+  .form-control {
+    width: 100%;
+  }
+  .login-form {
+    width: unset;
+    margin-bottom: 30px;
+  }
+}
