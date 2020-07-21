@@ -1,15 +1,19 @@
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
+import os
+from dotenv import load_dotenv, find_dotenv
 
 app = Flask(__name__)
 mysql = MySQL(app) 
 
+load_dotenv(find_dotenv('.env')) #finds the env file
+
 #set up the database configurations
-app.config['MYSQL_HOST'] = 'account.cdtpomlk2gyj.us-east-2.rds.amazonaws.com'
-app.config['MYSQL_USER'] = 'admin'
-app.config['MYSQL_PASSWORD'] = '$hopping1234'
-app.config['MYSQL_DB'] = 'shoppingwebapp'
-app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_HOST'] = os.getenv('HOST')
+app.config['MYSQL_USER'] = os.getenv('USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('PASS')
+app.config['MYSQL_DB'] = os.getenv('DB')
+app.config['MYSQL_PORT'] = int(os.getenv('PORT'))
 
 @app.route('/getdata') #route to test the database
 def data():
