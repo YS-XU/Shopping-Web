@@ -1,12 +1,18 @@
 from flask import Flask, render_template,request,session
 from flask_mysqldb import MySQL
 import os
+<<<<<<< HEAD
 from dotenv import load_dotenv,find_dotenv
+=======
+from dotenv import load_dotenv, find_dotenv
+>>>>>>> f2d522d6f8e93644fcd272791c41a7932ad1b11b
 
 app = Flask(__name__)
 mysql = MySQL(app)
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
+
+load_dotenv(find_dotenv('.env')) #finds the env file
 
 #set up the database configurations
 app.config['MYSQL_HOST'] = os.getenv('HOST')
