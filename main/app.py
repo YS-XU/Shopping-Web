@@ -1,18 +1,13 @@
-from flask import Flask, render_template,request,session
+from flask import Flask, render_template,request,session,redirect
 from flask_mysqldb import MySQL
 import os
-<<<<<<< HEAD
 from dotenv import load_dotenv,find_dotenv
-=======
-from dotenv import load_dotenv, find_dotenv
->>>>>>> f2d522d6f8e93644fcd272791c41a7932ad1b11b
 
 app = Flask(__name__)
 mysql = MySQL(app)
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
 
-load_dotenv(find_dotenv('.env')) #finds the env file
 
 #set up the database configurations
 app.config['MYSQL_HOST'] = os.getenv('HOST')
@@ -31,6 +26,8 @@ def data():
 @app.route("/") #route to the home page
 def home():
     exist = None
+    if 'user' not in session: # if 'user' does not exist in session, then declare with None value
+        session['user'] = None
     if session['user'] is not None:
         exist = session['user']
     return render_template("index.html",user=exist)
@@ -39,11 +36,10 @@ def home():
 def userhome():
     return render_template("userhome.html")
 
-
 @app.route("/register/") #route to the register page
 def register():
     if session['user'] is not None:
-        return redirect('userhome')
+        return redirect('/userhome/')
     return render_template("register.html")
 
 @app.route("/login/",methods=['POST']) #route to the register page
@@ -60,13 +56,8 @@ def login():
 
         print(username,password)
 
-
-        return redirect('userhome',name=name)
-
-
-
-
-
+        return redirect('/userhome/')
 
 if __name__ == "__main__":
+    app.config['SECRET_KEY'] = 'fdsfsdfdsfsdfdsfsfsdf'
     app.run(debug=True)
