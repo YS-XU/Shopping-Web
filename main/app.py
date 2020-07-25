@@ -34,7 +34,7 @@ def home():
 
 @app.route("/userhome/") #route to the home page
 def userhome():
-    return render_template("userhome.html")
+    return render_template("user/account.html")
 
 @app.route("/register/") #route to the register page
 def register():
