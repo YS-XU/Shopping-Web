@@ -1,11 +1,87 @@
 {% extends 'base.html' %}
 
 
-{% block title %} ACCOUNT {% endblock %}
+{% block title %} Account {% endblock %}
 {% block content %}
-  {% if user  %}
-  <h2>welcome , {{ user }}</h2>
-  {% endif %}
-      <h1 class="hi">Hello</h1>
-      <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg">
+{% if user  %}
+<h2>welcome , {{ user }}</h2>
+{% endif %}
+<style media="screen">
+  .container{
+    text-align: center!important;
+    max-width: 850px!important;
+  }
+  .title-account{
+    padding-top:40px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+  h6{
+    text-transform: uppercase;
+    text-align: left;
+    padding-bottom: 10px;
+    font-weight: bold;
+  }
+  p{
+    text-align: left;
+    padding-bottom: 20px;
+  }
+  .welcome-message{
+    text-align: center;
+    margin: 5px;
+    padding-bottom: 30px;
+  }
+  .sign-out-link{
+    text-decoration: underline;
+    color:black;
+  }
+  .go-to-link{
+    color:black;
+  }
+  .go-to-link:hover{
+    color:black;
+  }
+  .go-to-container{
+    text-align: left;
+  }
+</style>
+  <h1 class="title-account" >ACCOUNT</h1>
+  <p class="welcome-message">Welcome, someuser</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h6>Wishlist</h6>
+        <p>Your wishlist is currently empty</p>
+        <hr>
+      </div>
+      <div class="col-md-6">
+        <h6>Orders</h6>
+        <p>No orders have been placed yet</p>
+        <hr>
+      </div>
+      <div class="col-md-6">
+        <h6>Personal Details</h6>
+        <p>View and manage your personal information</p>
+        <div class="go-to-container">
+          <a class="go-to-link" href="#">Go to personal details ></a>
+        </div>
+        <hr>
+      </div>
+      <div class="col-md-6">
+        <h6>Payment Methods</h6>
+        <p>View and manage your payments</p>
+        <div class="go-to-container">
+          <a class="go-to-link" href="#">Go to billing information ></a>
+        </div>
+        <hr>
+      </div>
+    </div>
+  <div class="logout-link">
+    <a class="sign-out-link" href="#">Sign out</a>
+  </div>
+  </div>
+
+<!-- <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg"> -->
 {% endblock %}
