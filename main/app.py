@@ -70,19 +70,23 @@ def signup():
 
 @app.route("/login/", methods=['POST']) #route to the register page
 def login():
+    con = mysql.connection
+    cursor = con.cursor()
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
         #query the database for user table by the username
         #select * from user where username = 'username'
         #if user does exist, then compare the password
+        if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [username]):
+            if cursor.execute("SELECT * FROM USER WHERE Email = %s AND Passwords = %s", [username, password] ):
+                #if the user exist and password matches then login succuess
+                session['user'] = cursor.execute("SELECT Firstname FROM USER WHERE Email = %s", [username])
+                return redirect('/userhome/')
+       
+        return render_template("error.html")
 
-        #if the user exist and password matches then...
-        session['user'] = username
-
-        print(username,password)
-
-        return redirect('/userhome/')
+         
 
 if __name__ == "__main__":
     app.config['SECRET_KEY'] = 'fdsfsdfdsfsdfdsfsfsdf'
