@@ -33,23 +33,23 @@
 
       <!-- Register component -->
       <div class="register-container" id="register-container">
-        <form method="POST" action="" class="login-form">
+        <form method="POST" action="/signup/" class="login-form">
           <p class="prompt-msg">Welcome, create an account with us!</p>
           <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp" required>
+            <input name="Email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp" required>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">First Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First name" aria-describedby="emailHelp" required>
+            <input name="Firstname" type="text" class="form-control" id="exampleInputEmail1" placeholder="First name" required>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Last name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Last name" aria-describedby="emailHelp" required>
+            <input name="Lastname" type="text" class="form-control" id="exampleInputEmail1" placeholder="Last name" required>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" onchange="checkIfMatch();" class="form-control" placeholder="password" id="password1" required>
+            <input name="Passwords" type="password" onchange="checkIfMatch();" class="form-control" placeholder="password" id="password1" required>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Re-enter Password</label>

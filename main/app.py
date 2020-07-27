@@ -18,9 +18,14 @@ app.config['MYSQL_PORT'] = int(os.getenv('PORT'))
 
 @app.route('/getdata') #route to test the database
 def data():
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM testinguser;') #get all the data from the user table
-    rv = cur.fetchall()
+    con = mysql.connection
+    cursor = con.cursor()
+    
+    #cursor.execute("INSERT INTO testinguser (firstname, lastname) VALUES ('yaosheng', 'xu');")
+    #con.commit()
+    cursor.execute('SELECT * FROM testinguser;') #get all the data from the user table
+    rv = cursor.fetchall()
+    
     return str(rv)
 
 @app.route("/") #route to the home page
@@ -42,7 +47,28 @@ def register():
         return redirect('/userhome/')
     return render_template("register.html")
 
-@app.route("/login/",methods=['POST']) #route to the register page
+@app.route("/signup/", methods=['POST'])
+def signup():
+    con = mysql.connection
+    cursor = con.cursor()
+    if request.method == 'POST':
+        email = request.form.get('Email')
+        firstname = request.form.get('Firstname')
+        lastname = request.form.get('Lastname')
+        setPassword = request.form.get('Passwords')
+        
+        #Check if the user exist
+        if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [email]):
+            return render_template("error.html")
+        
+        #insert new user information into user table
+        cursor.execute("INSERT INTO USER (Firstname, Lastname, Email, Passwords) VALUES (%s, %s, %s, %s)",
+        (firstname, lastname, email, setPassword))
+        con.commit()
+        return redirect('/register/')
+
+
+@app.route("/login/", methods=['POST']) #route to the register page
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
