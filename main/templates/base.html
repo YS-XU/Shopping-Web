@@ -7,11 +7,11 @@
       <script src="https://kit.fontawesome.com/f6e3bdc582.js" crossorigin="anonymous"></script>
       <link href="https://fonts.googleapis.com/css2?family=Rokkitt&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static',filename='css/loginpage.css') }}">
+      {% block css %}{% endblock %}
     </head>
     <body>
       <div>
-        <a class="navbar-brand" href="home.html">Logo</a>
+        <a class="navbar-brand" href="/">Logo</a>
       </div>
 
       <nav class="account">
