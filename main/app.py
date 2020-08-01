@@ -1,5 +1,6 @@
 from flask import Flask, render_template,request,session,redirect
 from flask_mysqldb import MySQL
+from passlib.hash import sha256_crypt
 import os
 from dotenv import load_dotenv,find_dotenv
 
@@ -22,10 +23,10 @@ def data():
 
     #cursor.execute("INSERT INTO testinguser (firstname, lastname) VALUES ('yaosheng', 'xu');")
     #con.commit()
-    cursor.execute('SELECT * FROM testinguser;') #get all the data from the user table
-    rv = cursor.fetchall()
+    cursor.execute('SELECT * FROM USER;') #get all the data from the user table
 
-    return str(rv)
+    rv = cursor.fetchone()
+    return str(rv[0])
 
 @app.route('/home')
 @app.route("/") #route to the home page
@@ -62,14 +63,14 @@ def signup():
         firstname = request.form.get('Firstname')
         lastname = request.form.get('Lastname')
         setPassword = request.form.get('Passwords')
-
+        hashPassword = sha256_crypt.hash(setPassword)
         #Check if the user exist
         if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [email]):
             return render_template("error.html")
 
         #insert new user information into user table
         cursor.execute("INSERT INTO USER (Firstname, Lastname, Email, Passwords) VALUES (%s, %s, %s, %s)",
-        (firstname, lastname, email, setPassword))
+        (firstname, lastname, email, hashPassword))
         con.commit()
         return redirect('/register/')
 
@@ -85,9 +86,10 @@ def login():
         #select * from user where username = 'username'
         #if user does exist, then compare the password
         if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [username]):
-            if cursor.execute("SELECT * FROM USER WHERE Email = %s AND Passwords = %s", [username, password] ):
-                #if the user exist and password matches then login succuess
-                session['user'] = cursor.execute("SELECT Firstname FROM USER WHERE Email = %s", [username])
+            rv = cursor.fetchone()
+            if sha256_crypt.verify(password, rv[4]):
+                #if the user exist and password matches then login succuess                
+                session['user'] = rv[1]
                 return redirect('/userhome/')
 
         return render_template("error.html")
