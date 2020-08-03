@@ -46,13 +46,20 @@ def userhome():
         return redirect('/')
     else: #if user does exist, get the user's firstname from the session
         user = session.get('user')
+
     return render_template("user/account.html",user=user)
+
+@app.route("/signout/")
+def signout():
+    session['user'] = None
+    return redirect("/")
 
 @app.route("/register/") #route to the register page
 def register():
     if session['user'] is not None:
         return redirect('/userhome/')
     return render_template("register.html")
+
 
 @app.route("/signup/", methods=['POST'])
 def signup():
@@ -95,11 +102,13 @@ def login():
         return render_template("error.html")
 
 
+
+
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
     return render_template('user/personaldetails.html')
 
 
 if __name__ == "__main__":
-    app.config['SECRET_KEY'] = 'fdsfsdfdsfsdfdsfsfsdf'
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.run(debug=True)
