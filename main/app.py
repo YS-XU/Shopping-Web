@@ -88,7 +88,7 @@ def login():
         if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [username]):
             rv = cursor.fetchone()
             if sha256_crypt.verify(password, rv[4]):
-                #if the user exist and password matches then login succuess                
+                #if the user exist and password matches then login succuess
                 session['user'] = rv[1]
                 return redirect('/userhome/')
 
@@ -98,8 +98,8 @@ def login():
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
     return render_template('user/personaldetails.html')
-
+    
 
 if __name__ == "__main__":
-    app.config['SECRET_KEY'] = 'fdsfsdfdsfsdfdsfsfsdf'
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.run(debug=True)

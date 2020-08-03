@@ -7,7 +7,15 @@
       <script src="https://kit.fontawesome.com/f6e3bdc582.js" crossorigin="anonymous"></script>
       <link href="https://fonts.googleapis.com/css2?family=Rokkitt&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
-      {% block css %}{% endblock %}
+      {% block css %}
+        <style media="screen">
+          /* Welcome user message */
+          .welcome-user{
+            margin: 0px 20px;
+            font-weight: bold;
+          }
+        </style>
+      {% endblock %}
     </head>
     <body>
       <div>
@@ -86,8 +94,8 @@
           </ul>
 
           <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
           </form>
 
         </div>
