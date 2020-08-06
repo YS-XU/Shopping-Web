@@ -8,14 +8,18 @@
       <link href="https://fonts.googleapis.com/css2?family=Rokkitt&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
       {% block css %}
-        <style media="screen">
-          /* Welcome user message */
-          .welcome-user{
-            margin: 0px 20px;
-            font-weight: bold;
-          }
-        </style>
       {% endblock %}
+      <style media="screen">
+        /* Welcome user message */
+        .welcome-user{
+          margin: 0px 20px;
+          font-weight: bold;
+        }
+        /*  */
+        .bg-light #navbarSupportedContent .navbar-nav{
+          margin: 0 auto!important;
+        }
+      </style>
     </head>
     <body>
       <div>
@@ -32,12 +36,11 @@
       </nav>
 
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav style="background-color:white!important;" class="navbar navbar-expand-lg navbar-light bg-light">
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -46,49 +49,36 @@
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+                Clothing
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Suits</a>
+                <a class="dropdown-item" href="#">Tops</a>
+                <a class="dropdown-item" href="#">Bottom</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+                Footwear
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Sneakers</a>
+                <a class="dropdown-item" href="#">Sandles</a>
+                <a class="dropdown-item" href="#">Slippers</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+                Accessories
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Sunglasses</a>
+                <a class="dropdown-item" href="#">Watches</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
           </ul>

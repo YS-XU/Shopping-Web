@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Payment Methods {% endblock %}
+{% block css %}
+<style>
+    h1{
+        text-transform: uppercase;
+        text-align: center;
+        padding: 40px;
+        font-weight: bold;
+      }
+    .no-payment-message{
+        text-align: center;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Payment Methods</h1>
+{% if not payment %}
+    <p class="no-payment-message">No payment methods have been saved yet. You can create payment methods during the checkout.</p>
+{% else %}
+    <h3>payment details</h3>
+{% endif %}
+{% endblock %}

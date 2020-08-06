@@ -105,6 +105,10 @@ def login():
 def personal_details():
     return render_template('user/personaldetails.html')
 
+@app.route('/payment-methods/') #route to the user's payment page
+def payment_methods():
+    return render_template('user/paymentmethod.html')
+
 
 if __name__ == "__main__":
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')

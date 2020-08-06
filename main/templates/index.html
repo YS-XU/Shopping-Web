@@ -1,8 +1,69 @@
 {% extends 'base.html' %}
-
-
 {% block title %} Home {% endblock %}
+
+{% block css %}
+     <style>
+      .header-section{
+            width: 100%;
+      }
+      .btn-light{
+            border-radius: 0%;
+            width: 150px;
+            height: 50px;
+            font-weight: bold;
+      }
+      .button-container{
+            padding-bottom: 30px;
+            position: absolute;
+            text-align: center;
+            bottom: 0;
+            width: 100%;
+      }
+      .header-container{
+            height: 700px ;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+            
+      }
+      .category-captions{
+            color: #ffffff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            
+      }
+      @media screen and (max-width:768px){
+            .header-container{
+                  height: 400px;
+                  background-position-x: 30%;
+            }
+      }
+     </style>
+{% endblock %}
 {% block content %}
-      <h1 class="hi">Hello</h1>
-      <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg">
+      <section class="header-section">
+            <div style="background-image: url('{{ url_for('static',filename='img/shirts.jpg') }}' );" class="header-container">
+                 <div class="button-container">
+                  <h2 class="category-captions"> Clothes </h2>
+                  <button class="btn btn-light">See More</button> 
+                 </div>
+            </div>
+      </section>
+      <div style="background-image: url('{{ url_for('static',filename='img/eyeglass.jpg') }}' );" class="header-container">
+            <div class="header-container">
+                 <div class="button-container">
+                  <h2 class="category-captions"> Accessories </h2>
+                  <button class="btn btn-light">See More</button> 
+                 </div>
+            </div>
+      </section>
+      <section class="header-section">
+            <div style="background-image: url('{{ url_for('static',filename='img/footwear.jpg') }}' );" class="header-container">
+                 <div class="button-container">
+                  <h2 class="category-captions"> Footwear </h2>
+                  <button class="btn btn-light">See More</button> 
+                 </div>
+            </div>
+      </section>
 {% endblock %}
