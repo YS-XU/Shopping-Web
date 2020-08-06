@@ -26,7 +26,8 @@ def data():
     cursor.execute('SELECT * FROM USER;') #get all the data from the user table
 
     rv = cursor.fetchone()
-    return str(rv[0])
+    session['user'] = rv[1]
+    return str(rv[1])
 
 @app.route('/home')
 @app.route("/") #route to the home page
@@ -51,7 +52,8 @@ def userhome():
 
 @app.route("/signout/")
 def signout():
-    session['user'] = None
+    session.clear()
+    print(session)
     return redirect("/")
 
 @app.route("/register/") #route to the register page
@@ -96,6 +98,7 @@ def login():
             if sha256_crypt.verify(password, rv[4]):
                 #if the user exist and password matches then login succuess
                 session['user'] = rv[1]
+                session['email'] = rv[3]
                 return redirect('/userhome/')
 
         return render_template("error.html")
@@ -103,7 +106,26 @@ def login():
 
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
+    print(session)
     return render_template('user/personaldetails.html')
+
+@app.route('/change_personal_detail/', methods=['POST'])
+def change_personal_detail():
+    con = mysql.connection
+    cursor = con.cursor()
+    if request.method == 'POST':
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
+        if firstname:
+            cursor.execute("UPDATE USER SET Firstname = %s WHERE Email = %s", (firstname, session['email']))
+            session['user'] = firstname
+        
+        if lastname:
+            cursor.execute("UPDATE USER SET Lastname = %s WHERE Email = %s", (lastname, session['email']))
+            session['user'] = lastname
+        con.commit()
+
+    return redirect('/personal/')
 
 @app.route('/payment-methods/') #route to the user's payment page
 def payment_methods():
