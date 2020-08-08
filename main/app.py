@@ -57,15 +57,15 @@ def signout():
 
 @app.route("/register/") #route to the register page
 def register():
-    if session['user'] is not None:
+    if session['user'] is not None: #if user exist, then go to the user's account page
         return redirect('/userhome/')
     return render_template("register.html")
 
 @app.route("/signup/", methods=['POST'])
 def signup():
-    con = mysql.connection
-    cursor = con.cursor()
     if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
         email = request.form.get('Email')
         firstname = request.form.get('Firstname')
         lastname = request.form.get('Lastname')
@@ -84,9 +84,9 @@ def signup():
 
 @app.route("/login/", methods=['POST']) #route to the register page
 def login():
-    con = mysql.connection
-    cursor = con.cursor()
     if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
         username = request.form.get('username')
         password = request.form.get('password')
         #query the database for user table by the username
@@ -103,12 +103,14 @@ def login():
 
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
-    print(session)
+    #get the user object from the session
+    if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
+        return redirect('/')
     return render_template('user/personaldetails.html')
 
 @app.route('/change_personal_detail/', methods=['POST'])
 def change_personal_detail():
-    
+
     if request.method == 'POST':
         con = mysql.connection
         cursor = con.cursor()
@@ -120,13 +122,16 @@ def change_personal_detail():
 
         if lastname:
             cursor.execute("UPDATE USER SET Lastname = %s WHERE Email = %s", (lastname, session['email']))
-            
+
         con.commit()
 
     return redirect('/personal/')
 
 @app.route('/payment-methods/') #route to the user's payment page
 def payment_methods():
+    #get the user object from the session
+    if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
+        return redirect('/')
     return render_template('user/paymentmethod.html')
 
 
