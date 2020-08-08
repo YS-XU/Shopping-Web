@@ -111,9 +111,10 @@ def personal_details():
 
 @app.route('/change_personal_detail/', methods=['POST'])
 def change_personal_detail():
-    con = mysql.connection
-    cursor = con.cursor()
+    
     if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
         if firstname:
@@ -122,7 +123,7 @@ def change_personal_detail():
         
         if lastname:
             cursor.execute("UPDATE USER SET Lastname = %s WHERE Email = %s", (lastname, session['email']))
-            session['user'] = lastname
+            
         con.commit()
 
     return redirect('/personal/')
