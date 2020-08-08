@@ -20,7 +20,6 @@ app.config['MYSQL_PORT'] = int(os.getenv('PORT'))
 def data():
     con = mysql.connection
     cursor = con.cursor()
-
     #cursor.execute("INSERT INTO testinguser (firstname, lastname) VALUES ('yaosheng', 'xu');")
     #con.commit()
     cursor.execute('SELECT * FROM USER;') #get all the data from the user table
@@ -100,9 +99,7 @@ def login():
                 session['user'] = rv[1]
                 session['email'] = rv[3]
                 return redirect('/userhome/')
-
         return render_template("error.html")
-
 
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
@@ -119,7 +116,7 @@ def change_personal_detail():
         if firstname:
             cursor.execute("UPDATE USER SET Firstname = %s WHERE Email = %s", (firstname, session['email']))
             session['user'] = firstname
-        
+
         if lastname:
             cursor.execute("UPDATE USER SET Lastname = %s WHERE Email = %s", (lastname, session['email']))
             session['user'] = lastname
