@@ -22,6 +22,9 @@
       <div class="login-container" id="login-container">
         <form action="/login/" method="post" class="login-form">
           <div class="form-group">
+            {% if error %}
+            <p style="color:red;">{{ error }}</p>
+            {% endif %}
             <p class="prompt-msg">Sign in with your email and password.</p>
             <label for="exampleInputEmail1">Email address</label>
             <input name="username" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
@@ -37,6 +40,9 @@
       <!-- Register component -->
       <div class="register-container" id="register-container">
         <form method="POST" action="/signup/" class="login-form">
+          {% if error %}
+            <p style="color:red;">{{ error }}</p>
+          {% endif %}
           <p class="prompt-msg">Welcome, create an account with us!</p>
           <div class="form-group">
             <label for="exampleInputEmail1">Email</label>

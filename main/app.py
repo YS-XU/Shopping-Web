@@ -73,7 +73,8 @@ def signup():
         hashPassword = sha256_crypt.hash(setPassword)
         #Check if the user exist
         if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [email]):
-            return render_template("error.html")
+            error = "Email already exist"
+            return render_template("register.html", error=error)
 
         #insert new user information into user table
         cursor.execute("INSERT INTO USER (Firstname, Lastname, Email, Passwords) VALUES (%s, %s, %s, %s)",
@@ -100,7 +101,11 @@ def login():
                 session['email'] = rv[3]
                 session['password'] = rv[4]
                 return redirect('/userhome/')
-        return render_template("error.html")
+            else:
+                error = "Enter the valid Email or Password"
+        else:
+            error = "Enter the valid Email or Password"        
+        return render_template("register.html", error=error)
 
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
