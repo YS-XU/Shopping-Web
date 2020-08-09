@@ -14,4 +14,4 @@ def decode_flask_cookie(secret_key, cookie_str): # pass the SECRET_KEY, and COOK
 
 
 if __name__ == '__main__':
-    print(decode_flask_cookie('gzTxzyKT8yWZvprygoxc5ALvoW3sXGOD','eyJlbWFpbCI6ImppbW15dHJhbjE2MjBAZ21haWwuY29tIiwidXNlciI6IkpvaG5iZWwifQ.Xy7hcw.qL7rYej5nD3c2QQPLQ1aKQdHhm8'))
+    print(decode_flask_cookie('gzTxzyKT8yWZvprygoxc5ALvoW3sXGOD','eyJ1c2VyIjpudWxsfQ.Xy7mtw.-PtvoNY9KwQP3D8ptIneuYRQQsU'))

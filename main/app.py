@@ -39,7 +39,7 @@ def home():
         print(exist)
     return render_template("index.html",user=exist)
 
-@app.route("/userhome/") #route to the home page
+@app.route("/userhome/") #route to the account home page
 def userhome():
     #get the user object from the session
     if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
@@ -49,7 +49,7 @@ def userhome():
 
     return render_template("user/account.html",user=user)
 
-@app.route("/signout/")
+@app.route("/signout/") #route to sign out the account
 def signout():
     session.clear()
     print(session)
@@ -61,7 +61,7 @@ def register():
         return redirect('/userhome/')
     return render_template("register.html")
 
-@app.route("/signup/", methods=['POST'])
+@app.route("/signup/", methods=['POST']) #route to sign up the account
 def signup():
     if request.method == 'POST':
         con = mysql.connection
@@ -98,6 +98,7 @@ def login():
                 #if the user exist and password matches then login succuess
                 session['user'] = rv[1]
                 session['email'] = rv[3]
+                session['password'] = rv[4]
                 return redirect('/userhome/')
         return render_template("error.html")
 
@@ -108,7 +109,7 @@ def personal_details():
         return redirect('/')
     return render_template('user/personaldetails.html')
 
-@app.route('/change_personal_detail/', methods=['POST'])
+@app.route('/change_personal_detail/', methods=['POST']) #route to change personal detail
 def change_personal_detail():
 
     if request.method == 'POST':
@@ -126,6 +127,21 @@ def change_personal_detail():
         con.commit()
 
     return redirect('/personal/')
+
+@app.route('/change_password/', methods=['POST']) #route to change password
+def change_password():
+    if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
+
+        currentPass = request.form.get('currentpass')
+        newPassword = request.form.get('newpassword')
+        hashNewPassword = sha256_crypt.hash(newPassword)
+
+        if sha256_crypt.verify(currentPass, session['password']):
+            cursor.execute("UPDATE USER SET Passwords = %s WHERE Email = %s", (hashNewPassword, session['email']))
+        con.commit()
+    return redirect('/userhome/')
 
 @app.route('/payment-methods/') #route to the user's payment page
 def payment_methods():
