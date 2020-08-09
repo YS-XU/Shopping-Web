@@ -1,0 +1,66 @@
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  padding: 40px;
+  font-weight: bold;
+}
+
+h6 {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 2px solid black;
+  width: 400px;
+  margin: 0 auto;
+}
+
+section {
+  text-align: center;
+  padding: 36px 0px;
+}
+
+/* login/register btn styling */
+.btn-primary {
+  color: #fff;
+  background-color: black;
+  border-color: black;
+  width: 400px;
+  border-radius: 0;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:disabled,
+.open>.dropdown-toggle.btn-one {
+  color: #333;
+  background-color: black;
+  border-color: black;
+}
+
+form div input {
+  width: 400px;
+  margin: 20px 0px;
+}
+
+.span-msg-container {
+  width: 400px;
+  margin: 0 auto;
+}
+
+/* Mobile styling*/
+@media screen and (max-width:768px) {
+  h6, input, .btn-primary {
+    width: 100% !important;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .span-msg-container {
+    width: 100%;
+  }
+}

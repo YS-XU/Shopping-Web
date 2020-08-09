@@ -1,0 +1,10 @@
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  padding: 40px;
+  font-weight: bold;
+}
+
+.no-payment-message {
+  text-align: center;
+}

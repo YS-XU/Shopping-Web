@@ -1,18 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} Payment Methods {% endblock %}
 {% block css %}
-<style>
-    h1{
-        text-transform: uppercase;
-        text-align: center;
-        padding: 40px;
-        font-weight: bold;
-      }
-    .no-payment-message{
-        text-align: center;
-    }
-    
-</style>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/paymentmethod.css') }}">
 {% endblock %}
 
 {% block content %}
