@@ -1,45 +1,49 @@
-body{
-  font-family: 'Rokkitt', serif!important;
+body {
+  font-family: 'Rokkitt', serif !important;
 }
 
-h1.hi{
-    text-align: center;
+/* align the navbar menus to the center */
+.bg-light #navbarSupportedContent .navbar-nav {
+  margin: 0 auto !important;
 }
 
-a.navbar-brand{
-    color: black;
-    text-align: center;
-    display: block;
-    font-size: 50px;
+h1.hi {
+  text-align: center;
 }
 
-
-nav.account{
-    text-align: right;
+a.navbar-brand {
+  color: black;
+  text-align: center;
+  display: block;
+  font-size: 50px;
 }
 
-li.nav-item{
-    font-size: large;
-    margin-left: 50px;
+nav.account {
+  text-align: right;
 }
 
-ul.account{
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+li.nav-item {
+  font-size: large;
+  margin-left: 50px;
 }
 
-li.account{
-    display: inline;
-    margin-right: 20px;
+ul.account {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
-a.account{
-    color: gray;
-    font-size: x-large;
-    margin: 10px;
+li.account {
+  display: inline;
+  margin-right: 20px;
+}
+
+a.account {
+  color: gray;
+  font-size: x-large;
+  margin: 10px;
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }

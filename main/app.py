@@ -20,7 +20,6 @@ app.config['MYSQL_PORT'] = int(os.getenv('PORT'))
 def data():
     con = mysql.connection
     cursor = con.cursor()
-
     #cursor.execute("INSERT INTO testinguser (firstname, lastname) VALUES ('yaosheng', 'xu');")
     #con.commit()
     cursor.execute('SELECT * FROM USER;') #get all the data from the user table
@@ -40,7 +39,7 @@ def home():
         print(exist)
     return render_template("index.html",user=exist)
 
-@app.route("/userhome/") #route to the home page
+@app.route("/userhome/") #route to the account home page
 def userhome():
     #get the user object from the session
     if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
@@ -50,7 +49,7 @@ def userhome():
 
     return render_template("user/account.html",user=user)
 
-@app.route("/signout/")
+@app.route("/signout/") #route to sign out the account
 def signout():
     session.clear()
     print(session)
@@ -58,15 +57,15 @@ def signout():
 
 @app.route("/register/") #route to the register page
 def register():
-    if session['user'] is not None:
+    if session['user'] is not None: #if user exist, then go to the user's account page
         return redirect('/userhome/')
     return render_template("register.html")
 
-@app.route("/signup/", methods=['POST'])
+@app.route("/signup/", methods=['POST']) #route to sign up the account
 def signup():
-    con = mysql.connection
-    cursor = con.cursor()
     if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
         email = request.form.get('Email')
         firstname = request.form.get('Firstname')
         lastname = request.form.get('Lastname')
@@ -74,7 +73,8 @@ def signup():
         hashPassword = sha256_crypt.hash(setPassword)
         #Check if the user exist
         if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [email]):
-            return render_template("error.html")
+            existError = "Email already exist"
+            return render_template("register.html", existError=existError)
 
         #insert new user information into user table
         cursor.execute("INSERT INTO USER (Firstname, Lastname, Email, Passwords) VALUES (%s, %s, %s, %s)",
@@ -85,9 +85,9 @@ def signup():
 
 @app.route("/login/", methods=['POST']) #route to the register page
 def login():
-    con = mysql.connection
-    cursor = con.cursor()
     if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
         username = request.form.get('username')
         password = request.form.get('password')
         #query the database for user table by the username
@@ -99,36 +99,60 @@ def login():
                 #if the user exist and password matches then login succuess
                 session['user'] = rv[1]
                 session['email'] = rv[3]
+                session['password'] = rv[4]
                 return redirect('/userhome/')
-
-        return render_template("error.html")
-
+            else:
+                loginError = "Enter the valid Email or Password"
+        else:
+            loginError = "Enter the valid Email or Password"        
+        return render_template("register.html", loginError=loginError)
 
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
-    print(session)
+    #get the user object from the session
+    if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
+        return redirect('/')
     return render_template('user/personaldetails.html')
 
-@app.route('/change_personal_detail/', methods=['POST'])
+@app.route('/change_personal_detail/', methods=['POST']) #route to change personal detail
 def change_personal_detail():
-    con = mysql.connection
-    cursor = con.cursor()
+
     if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
         if firstname:
             cursor.execute("UPDATE USER SET Firstname = %s WHERE Email = %s", (firstname, session['email']))
             session['user'] = firstname
-        
+
         if lastname:
             cursor.execute("UPDATE USER SET Lastname = %s WHERE Email = %s", (lastname, session['email']))
-            session['user'] = lastname
+
         con.commit()
 
     return redirect('/personal/')
 
+@app.route('/change_password/', methods=['POST']) #route to change password
+def change_password():
+    if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
+
+        currentPass = request.form.get('currentpass')
+        newPassword = request.form.get('newpassword')
+        hashNewPassword = sha256_crypt.hash(newPassword)
+
+        if sha256_crypt.verify(currentPass, session['password']):
+            cursor.execute("UPDATE USER SET Passwords = %s WHERE Email = %s", (hashNewPassword, session['email']))
+        con.commit()
+    return redirect('/userhome/')
+
 @app.route('/payment-methods/') #route to the user's payment page
 def payment_methods():
+    #get the user object from the session
+    if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
+        return redirect('/')
     return render_template('user/paymentmethod.html')
 
 
