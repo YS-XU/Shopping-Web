@@ -36,7 +36,9 @@ li {
 
 /* Remove extra left and right margins, due to padding */
 .row {
-  margin-right: 140px;
+  margin-left: 3%;
+  margin-top: 15%;
+
 }
 
 /* Clear floats after the columns */
