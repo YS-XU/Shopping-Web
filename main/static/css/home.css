@@ -2,11 +2,6 @@ body {
   font-family: 'Rokkitt', serif !important;
 }
 
-/* align the navbar menus to the center */
-.bg-light #navbarSupportedContent .navbar-nav {
-  margin: 0 auto !important;
-}
-
 h1.hi {
   text-align: center;
 }
