@@ -24,9 +24,9 @@ def data():
     #con.commit()
     cursor.execute('SELECT * FROM USER;') #get all the data from the user table
 
-    rv = cursor.fetchone()
-    session['user'] = rv[1]
-    return str(rv[1])
+    rv = cursor.fetchall()
+    # session['user'] = rv[1]
+    return str(rv)
 
 @app.route('/home')
 @app.route("/") #route to the home page
@@ -104,7 +104,7 @@ def login():
             else:
                 loginError = "Enter the valid Email or Password"
         else:
-            loginError = "Enter the valid Email or Password"        
+            loginError = "Enter the valid Email or Password"
         return render_template("register.html", loginError=loginError)
 
 @app.route('/personal/') #route to the user's personal settings page
@@ -154,6 +154,16 @@ def payment_methods():
     if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
         return redirect('/')
     return render_template('user/paymentmethod.html')
+
+@app.route('/items/shirts/') #route to the user's payment page
+def items_shirts():
+    items = (
+        (1,'itemname'),
+        (2,'itemname2'),
+        (3,'itemname3')
+    )
+
+    return render_template('item/shirts.html',items=items)
 
 
 if __name__ == "__main__":

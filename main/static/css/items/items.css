@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+li {
+  float: right;
+  display: inline;
+  padding-left: 15px;
+}
+
+.container-portfolio-section {
+  float: left;
+  width: 100%;
+  height: 50px;
+  margin-top: 119px;
+  margin-bottom: 17px;
+  background-color: lightgray;
+}
+
+.Child-of-container-portfolio {
+  width: 100;
+  padding-left: 4em;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 33%;
+  /* margin: 0 auto; */
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+  margin-left: 3%;
+  margin-top: 15%;
+
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+img {
+  width: 100%;
+}

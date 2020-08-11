@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static',filename='css/items/items.css') }}"> {% endblock %}
+{% block content %}
+  <div class="row">
+
+  {% for i in items %}
+  <div class="column">
+    <div class="card">
+      <img class="card-img-top" src="img/apple.jpg" alt="Card image cap">
+      <h3>{{i[0]}}</h3>
+      <p>{{i[1]}}</p>
+      <a href="/functiontoadd/{{i[0]}}"><button type="button" name="button">Add To Cart</button></a>
+    </div>
+  </div>
+  {% endfor %}
+
+  </div>
+{% endblock %}
