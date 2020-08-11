@@ -49,6 +49,10 @@ def userhome():
 
     return render_template("user/account.html",user=user)
 
+@app.route("/shoppingcart/")
+def shoppingcart():
+    return render_template("shoppingcart.html")
+
 @app.route("/signout/") #route to sign out the account
 def signout():
     session.clear()
