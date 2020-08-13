@@ -159,15 +159,44 @@ def payment_methods():
         return redirect('/')
     return render_template('user/paymentmethod.html')
 
-@app.route('/items/shirts/') #route to the user's payment page
-def items_shirts():
-    items = (
-        (1,'itemname'),
-        (2,'itemname2'),
-        (3,'itemname3')
-    )
 
-    return render_template('item/shirts.html',items=items)
+# All route for user to access Clothing
+@app.route('/items/clothing/bottom/') #route to the user to access clothing bottom
+def items_bottom():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'bottom'")
+    item = cursor.fetchall()
+    
+    return render_template('item/clothing/bottom.html',item=item)
+
+
+@app.route('/items/clothing/dresses/') #route to the user to access clothing dresses
+def items_dresses():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'dresses'")
+    item = cursor.fetchall()
+    
+    return render_template('item/clothing/dresses.html',item=item)
+
+@app.route('/items/clothing/suits/') #route to the user to access suits
+def items_suits():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'suits'")
+    item = cursor.fetchall()
+    
+    return render_template('item/clothing/suits.html',item=item)
+
+@app.route('/items/clothing/tops/') #route to the user to access tops
+def items_tops():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'top'")
+    item = cursor.fetchall()
+    
+    return render_template('item/clothing/tops.html',item=item)
 
 
 if __name__ == "__main__":

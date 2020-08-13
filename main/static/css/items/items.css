@@ -34,11 +34,15 @@ li {
   padding: 0 10px;
 }
 
+.container{    
+  margin: auto;
+  margin-top: 5%;
+  
+}
+
 /* Remove extra left and right margins, due to padding */
 .row {
-  margin-left: 3%;
-  margin-top: 15%;
-
+  margin-top: 5%;
 }
 
 /* Clear floats after the columns */
@@ -50,4 +54,17 @@ li {
 
 img {
   width: 100%;
+}
+
+.card{
+  border-style: hidden;
+  margin-bottom: 10%;
+}
+
+.btn-secondary{
+  text-align: center;
+  width: 100%;
+  font-size: large;
+  background-color: white;
+  color: black;
 }
