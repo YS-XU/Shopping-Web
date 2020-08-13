@@ -1,0 +1,1 @@
+from .application.app import app #import the app file as a package

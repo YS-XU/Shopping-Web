@@ -15,6 +15,8 @@ app.config['MYSQL_USER'] = os.getenv('USER')
 app.config['MYSQL_PASSWORD'] = os.getenv('PASS')
 app.config['MYSQL_DB'] = os.getenv('DB')
 app.config['MYSQL_PORT'] = int(os.getenv('PORT'))
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
 
 @app.route('/getdata') #route to test the database
 def data():
@@ -200,5 +202,4 @@ def items_tops():
 
 
 if __name__ == "__main__":
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.run(debug=True)
