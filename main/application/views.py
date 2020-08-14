@@ -4,7 +4,7 @@ import os
 from application import app, mysql
 from flask_mysqldb import MySQL
 from dotenv import load_dotenv,find_dotenv
-from application.db.db import get_all_users
+from application.db.db import get_all_users,insert_new_user,check_if_user_exist
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
 
@@ -46,34 +46,33 @@ def home():
 #     print(session)
 #     return redirect("/")
 #
-# @app.route("/register/") #route to the register page
-# def register():
-#     if session['user'] is not None: #if user exist, then go to the user's account page
-#         return redirect('/userhome/')
-#     return render_template("register.html")
-#
-# @app.route("/signup/", methods=['POST']) #route to sign up the account
-# def signup():
-#     if request.method == 'POST':
-#         con = mysql.connection
-#         cursor = con.cursor()
-#         email = request.form.get('Email')
-#         firstname = request.form.get('Firstname')
-#         lastname = request.form.get('Lastname')
-#         setPassword = request.form.get('Passwords')
-#         hashPassword = sha256_crypt.hash(setPassword)
-#         #Check if the user exist
-#         if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [email]):
-#             existError = "Email already exist"
-#             return render_template("register.html", existError=existError)
-#
-#         #insert new user information into user table
-#         cursor.execute("INSERT INTO USER (Firstname, Lastname, Email, Passwords) VALUES (%s, %s, %s, %s)",
-#         (firstname, lastname, email, hashPassword))
-#         con.commit()
-#         return redirect('/register/')
-#
-#
+@app.route("/register/") #route to the register page
+def register():
+    if session['user'] is not None: #if user exist, then go to the user's account page
+        return redirect('/userhome/')
+    return render_template("register.html")
+
+@app.route("/signup/", methods=['POST']) #route to sign up the account
+def signup():
+    if request.method == 'POST':
+        con = mysql.connection
+        cursor = con.cursor()
+        email = request.form.get('Email')
+        firstname = request.form.get('Firstname')
+        lastname = request.form.get('Lastname')
+        setPassword = request.form.get('Passwords')
+        hashPassword = sha256_crypt.hash(setPassword)
+        #Check if user exists!
+        if check_if_user_exist(email):
+            existError = "Email already exist"
+            return render_template("register.html", existError=existError)
+
+        #insert new user information into user table
+        insert_new_user(firstname,lastname,email,hashPassword)
+
+        return redirect('/register/')
+
+
 # @app.route("/login/", methods=['POST']) #route to the register page
 # def login():
 #     if request.method == 'POST':
