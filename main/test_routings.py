@@ -1,49 +1,38 @@
 from application import app
 import unittest
 
-class TestRoutesForShopping(unittest.TestCase): #write test cases using unittest library
+class TestStatusCodeOfRoutings(unittest.TestCase):
 
-    def setUp(self):
-        # creates a test client
-        self.app = app.test_client()
-
-        # propagate the exceptions to the test client
-        self.app.testing = True
+    def setUp(self): #function to initialize the variables that will be used during the test cases
+        self.app = app.test_client() # creates a test client
+        self.app.testing = True # propagate the exceptions to the test client
 
     def tearDown(self): #function to be called after evey test
         pass
 
-    def test_home_status_code(self):
-        # sends HTTP GET request to the application
-        # on the specified path
-        with self.app.session_transaction() as session: #we are giving session values
+    #==========================================
+    # Test cases -- testing routings of pages |
+    #==========================================
+
+    # --Making sure the pages return back a 200(OK response) STATUS RESPONSE
+    def test_register_page_success_code(self):
+        with self.app.session_transaction() as session: #Giving session values to this client
             session['user'] = None
-        result = self.app.get('/register/')
-        self.assertEqual(result.status_code, 200)  # assert the status code of the response
+        result = self.app.get('/register/') # GET the register page by url -- will RETURN a result OBJECT
+        self.assertEqual(result.status_code, 200)  # check if the status code of the RESULT is equal to 200
 
     def test_shopping_cart_status(self):
         result = self.app.get('/shoppingcart/')
         self.assertEqual(result.status_code,200)
 
-    def test_clothing_bottom(self):
-        result = self.app.get('/items/clothing/bottom/')
-        self.assertEqual(result.status_code,200)
 
-    def test_user_home_without_user_status(self):
-        with self.app.session_transaction() as session: #we are giving session values
+    # -- Make sure it returns a 302(redirection) status code
+
+    def test_register_page_redirect_code(self):
+        with self.app.session_transaction() as session:
             session['user'] = 'jimmytran1620@gmail.com'
-        result = self.app.get('/userhome/')
-        self.assertEqual(result.status_code,200)
-
-    def test_home_data(self):
-        # sends HTTP GET request to the application
-        # on the specified path
-        result = self.app.get('/')
-        # assert the response data
-        self.assertIn('html',result.data.decode('ASCII')) #comparing to see if there is a 'html' string inside of the result data
-
-    # def test_register_page(self):
-    #     result = self.app
+        result = self.app.get('/register/')
+        self.assertEqual(result.status_code,302)
 
 if __name__ == '__main__':
     unittest.main()

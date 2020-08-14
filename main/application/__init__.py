@@ -3,6 +3,8 @@ from flask_mysqldb import MySQL
 import os
 from dotenv import load_dotenv,find_dotenv
 
+print('testing!!')
+
 load_dotenv(find_dotenv('.env')) #finds the .env file
 
 app = Flask(__name__)
