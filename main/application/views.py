@@ -4,15 +4,20 @@ import os
 from application import app, mysql
 from flask_mysqldb import MySQL
 from dotenv import load_dotenv,find_dotenv
-from application.db.db import get_all_users,insert_new_user,check_if_user_exist
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
 
 
-# all of the routes of the application
 @app.route('/getdata') #route to test the database
 def data():
-    rv = get_all_users()
+    con = mysql.connection
+    cursor = con.cursor()
+    #cursor.execute("INSERT INTO testinguser (firstname, lastname) VALUES ('yaosheng', 'xu');")
+    #con.commit()
+    cursor.execute('SELECT * FROM USER;') #get all the data from the user table
+
+    rv = cursor.fetchall()
+    # session['user'] = rv[1]
     return str(rv)
 
 @app.route('/home')
@@ -62,14 +67,15 @@ def signup():
         lastname = request.form.get('Lastname')
         setPassword = request.form.get('Passwords')
         hashPassword = sha256_crypt.hash(setPassword)
-        #Check if user exists!
-        if check_if_user_exist(email):
+        #Check if the user exist
+        if cursor.execute("SELECT * FROM USER WHERE Email LIKE %s", [email]):
             existError = "Email already exist"
             return render_template("register.html", existError=existError)
 
         #insert new user information into user table
-        insert_new_user(firstname,lastname,email,hashPassword)
-
+        cursor.execute("INSERT INTO USER (Firstname, Lastname, Email, Passwords) VALUES (%s, %s, %s, %s)",
+        (firstname, lastname, email, hashPassword))
+        con.commit()
         return redirect('/register/')
 
 

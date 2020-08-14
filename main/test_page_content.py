@@ -6,7 +6,9 @@ class TestPageContent(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client() #init the test client instance
         self.app.testing = True
-        self.counter = 0
+
+    def tearDown(self):
+        pass
 
     # Testing the webpage to see if response give back the right page content
     def test_home_page_content(self):
