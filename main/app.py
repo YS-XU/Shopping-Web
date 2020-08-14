@@ -169,7 +169,7 @@ def items_bottom():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'bottom'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/bottom.html',item=item)
 
 
@@ -179,7 +179,7 @@ def items_dresses():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'dresses'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/dresses.html',item=item)
 
 @app.route('/items/clothing/suits/') #route to the user to access suits
@@ -188,7 +188,7 @@ def items_suits():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'suits'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/suits.html',item=item)
 
 @app.route('/items/clothing/tops/') #route to the user to access tops
@@ -197,7 +197,7 @@ def items_tops():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'top'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/tops.html',item=item)
 
 
