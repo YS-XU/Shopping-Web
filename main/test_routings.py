@@ -1,4 +1,4 @@
-from app import app
+from application import app
 import unittest
 
 class TestRoutesForShopping(unittest.TestCase): #write test cases using unittest library
@@ -31,7 +31,7 @@ class TestRoutesForShopping(unittest.TestCase): #write test cases using unittest
 
     def test_user_home_without_user_status(self):
         with self.app.session_transaction() as session: #we are giving session values
-            session['user'] = None
+            session['user'] = 'jimmytran1620@gmail.com'
         result = self.app.get('/userhome/')
         self.assertEqual(result.status_code,200)
 
