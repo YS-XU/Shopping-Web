@@ -1,20 +1,12 @@
-from flask import Flask, render_template,request,session,redirect
-from flask_mysqldb import MySQL
+from flask import  render_template,request,session,redirect
 from passlib.hash import sha256_crypt
 import os
+from application import app, mysql
+from flask_mysqldb import MySQL
 from dotenv import load_dotenv,find_dotenv
-
-app = Flask(__name__)
-mysql = MySQL(app)
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
 
-#set up the database configurations
-app.config['MYSQL_HOST'] = os.getenv('HOST')
-app.config['MYSQL_USER'] = os.getenv('USER')
-app.config['MYSQL_PASSWORD'] = os.getenv('PASS')
-app.config['MYSQL_DB'] = os.getenv('DB')
-app.config['MYSQL_PORT'] = int(os.getenv('PORT'))
 
 @app.route('/getdata') #route to test the database
 def data():
@@ -167,7 +159,7 @@ def items_bottom():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'bottom'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/bottom.html',item=item)
 
 
@@ -177,7 +169,7 @@ def items_dresses():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'dresses'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/dresses.html',item=item)
 
 @app.route('/items/clothing/suits/') #route to the user to access suits
@@ -186,7 +178,7 @@ def items_suits():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'suits'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/suits.html',item=item)
 
 @app.route('/items/clothing/tops/') #route to the user to access tops
@@ -195,10 +187,5 @@ def items_tops():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'top'")
     item = cursor.fetchall()
-    
+
     return render_template('item/clothing/tops.html',item=item)
-
-
-if __name__ == "__main__":
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.run(debug=True)

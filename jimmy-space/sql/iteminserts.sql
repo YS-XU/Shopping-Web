@@ -17,3 +17,6 @@ insert into Item(Item,Price,Size,Quentity,Categories,Subcategories,Image) values
 insert into Item(Item,Price,Size,Quentity,Categories,Subcategories,Image) values("Bottom 2","23.24","S",4,"clothing","bottom","bottom2.jpg");
 insert into Item(Item,Price,Size,Quentity,Categories,Subcategories,Image) values("Bottom 3","56.34","S",4,"clothing","bottom","bottom3.jpg");
 insert into Item(Item,Price,Size,Quentity,Categories,Subcategories,Image) values("Bottom 4","79.24","S",4,"clothing","bottom","bottom4.jpg");
+
+
+CREATE TABLE Cart(UserID bigint(20) unsigned, ItemID bigint(20) unsigned, Quantity INTEGER NOT NULL, FOREIGN KEY (UserID) REFERENCES USER(UserID) , FOREIGN KEY (ItemID) REFERENCES Item(ItemID)); 
