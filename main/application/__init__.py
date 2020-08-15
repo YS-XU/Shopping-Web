@@ -2,7 +2,7 @@ from flask import Flask
 from flask_mysqldb import MySQL
 import os
 from dotenv import load_dotenv,find_dotenv
-
+from application import db
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
 

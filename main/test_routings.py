@@ -10,20 +10,20 @@ class TestStatusCodeOfRoutings(unittest.TestCase):
     def tearDown(self): #function to be called after evey test
         pass
 
-    #==========================================
-    # Test cases -- testing routings of pages |
-    #==========================================
+    #===========================================================================================
+    # Test cases -- check status code  of all routings and make sure it is working (must be 200)
+    #===========================================================================================
 
     # --Making sure the pages return back a 200(OK response) STATUS RESPONSE
     def test_register_page_success_code(self):
         with self.app.session_transaction() as session: #Giving session values to this client
             session['user'] = None
-        result = self.app.get('/register/') # GET the register page by url -- will RETURN a result OBJECT
-        self.assertEqual(result.status_code, 200)  # check if the status code of the RESULT is equal to 200
+        response = self.app.get('/register/') # GET the register page by url -- will RETURN a response OBJECT
+        self.assertEqual(response.status_code, 200)  # check if the status code of the response is equal to 200
 
     def test_shopping_cart_status(self):
-        result = self.app.get('/shoppingcart/')
-        self.assertEqual(result.status_code,200)
+        response = self.app.get('/shoppingcart/')
+        self.assertEqual(response.status_code,200)
 
 
     # -- Make sure it returns a 302(redirection) status code
@@ -31,8 +31,9 @@ class TestStatusCodeOfRoutings(unittest.TestCase):
     def test_register_page_redirect_code(self):
         with self.app.session_transaction() as session:
             session['user'] = 'jimmytran1620@gmail.com'
-        result = self.app.get('/register/')
-        self.assertEqual(result.status_code,302)
+        response = self.app.get('/register/',follow_redirects=True)
+        print(response)
+        self.assertEqual(response.status_code,200)
 
 if __name__ == '__main__':
     unittest.main()
