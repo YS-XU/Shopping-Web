@@ -1,0 +1,13 @@
+.AddtoCartshirts{
+  width: 50%;
+  /* height: 90px; */
+  background-color: lightgray;
+  border-top: 3px solid black;
+  border-bottom: 5px solid black;
+}
+img{
+  width: 30%;
+  float: left;
+  padding-right: 4%;
+
+}
