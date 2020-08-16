@@ -34,10 +34,10 @@ li {
   padding: 0 10px;
 }
 
-.container{    
+.container{
   margin: auto;
   margin-top: 5%;
-  
+
 }
 
 /* Remove extra left and right margins, due to padding */
@@ -67,4 +67,9 @@ img {
   font-size: large;
   background-color: white;
   color: black;
+}
+
+/* icon styling */
+.card i:hover{
+  color:pink;
 }

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} Wishlist {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/wishlist.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="wislist-section">
+  <div class="container">
+    <h1 class="wishlist-caption">Wishlist</h1>
+    <div class="row">
+      {% for i in range(6) %}
+      <div class="col-6 col-md-3 wishlist-container">
+        <div class="heart-container">
+          <a class="account" href="/wishlist/"><i class="far fa-heart the-heart-icon"></i></a>
+        </div>
+        <img class="wishlist-items" src="{{ url_for('static',filename='img/clothing/tops/shirt1.png') }}" alt="">
+        <p class="wishlist-info item-name">Item Name</p>
+        <p class="wishlist-info category">Category</p>
+        <p class="wishlist-info price">$1,000</p>
+        <div class="view-details-btn">
+          <button type="button"  class="btn btn-light" name="button">View details</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -53,8 +53,11 @@ def signout():
 
 @app.route("/register/") #route to the register page
 def register():
-    if session['user'] is not None: #if user exist, then go to the user's account page
-        return redirect('/userhome/')
+    try:
+        if session['user'] is not None: #if user exist, then go to the user's account page
+            return redirect('/userhome/')
+    except KeyError as e:
+        print(e)
     return render_template("register.html")
 
 @app.route("/signup/", methods=['POST']) #route to sign up the account
@@ -189,3 +192,8 @@ def items_tops():
     item = cursor.fetchall()
 
     return render_template('item/clothing/tops.html',item=item)
+
+@app.route('/user/wishlist/') #route to the wishlist
+def wishlist_view():
+    #ADD CODE TO GET ITEMS FROM WISHLIST TABLE SEND TO WEBPAGE
+    return render_template('user/wishlist.html')
