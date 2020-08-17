@@ -1,0 +1,45 @@
+.wishlist-caption {
+  text-align: center;
+  text-transform: uppercase;
+  padding: 20px;
+}
+.view-details-btn{
+    margin: 4px 0px;
+}
+.wislist-section {
+  margin-top: 4rem;
+}
+
+.wishlist-items:hover {
+  border-bottom: 5px black solid;
+}
+
+.wishlist-info {
+  margin: 5px 0px;
+  text-transform: uppercase;
+}
+
+.wishlist-container {
+  padding: 25px 0px !important;
+  text-align: center;
+}
+
+.item-name {
+  margin: 5px 0px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.price,
+.category {
+  margin: 0 !important;
+}
+.heart-container{
+  float:right;
+  padding-right: 10px;
+}
+.the-heart-icon{
+  color:black;
+}
+.the-heart-icon:hover{
+  color:red;
+}

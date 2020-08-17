@@ -1,9 +1,10 @@
-from flask import  render_template,request,session,redirect
+from flask import  render_template,request,session,redirect,abort
 from passlib.hash import sha256_crypt
 import os
 from application import app, mysql
 from flask_mysqldb import MySQL
 from dotenv import load_dotenv,find_dotenv
+from application.db.db import * #import everything from the db module
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
 
@@ -53,8 +54,11 @@ def signout():
 
 @app.route("/register/") #route to the register page
 def register():
-    if session['user'] is not None: #if user exist, then go to the user's account page
-        return redirect('/userhome/')
+    try:
+        if session['user'] is not None: #if user exist, then go to the user's account page
+            return redirect('/userhome/')
+    except KeyError as e:
+        print(e)
     return render_template("register.html")
 
 @app.route("/signup/", methods=['POST']) #route to sign up the account
@@ -93,6 +97,7 @@ def login():
             rv = cursor.fetchone()
             if sha256_crypt.verify(password, rv[4]):
                 #if the user exist and password matches then login succuess
+                session['id'] = rv[0]
                 session['user'] = rv[1]
                 session['email'] = rv[3]
                 session['password'] = rv[4]
@@ -189,3 +194,35 @@ def items_tops():
     item = cursor.fetchall()
 
     return render_template('item/clothing/tops.html',item=item)
+
+
+@app.route('/user/wishlist/') #route to the wishlist, ONLY logged in user can access their wishlist
+def wishlist_view():
+    if check_if_user_is_logged_in():
+        wishlist = get_the_users_wishlist(session['id']) #get the list of the user's wishlist, pass in the users id
+        print(wishlist)
+        return render_template('user/wishlist.html',wishlist=wishlist)
+    return redirect('/register/')
+
+@app.route('/user/wishlist/<category>/<subcategory>/<int:id>') #route to add the item to wishlist
+def add_to_wishlist(category,subcategory,id): #pass in the cat,and subcat, to redirect to the right page, and id reference item
+    if check_if_user_is_logged_in():
+        add_item_to_wishlist(session['id'],id) #pass in the user id and the item id
+        return redirect('/items/{}/{}'.format(category,subcategory))
+    return '<h1>401- Unauthorized- Access is Denied</h1>', 401 #if user is not signed in, they don't have access to this route
+
+@app.route('/user/wishlist/delete/<int:id>') #route to delete an item from the user's wishlist, pass in the item id
+def delete_from_wishlist(id):
+    if check_if_user_is_logged_in(): #check if the user is logged in
+        delete_item_from_wish_list(session['id'],id) #pass in the user id and the item id
+        return redirect('/user/wishlist/')
+    return '<h1>401- Unauthorized- Access is Denied</h1>', 401 #if user is not signed in, they don't have access to this route
+
+
+def check_if_user_is_logged_in(): #function to check if the user is logged in
+    try:
+        if 'user' in session and session['user'] is not None:
+            return True
+    except KeyError: #catch if there is a KeyError, there is an error that means that the 'user' does not exist
+        return False
+    return False

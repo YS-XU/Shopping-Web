@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Wishlist {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/wishlist.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="wislist-section">
+  <div class="container">
+    <h1 class="wishlist-caption">Wishlist</h1>
+    <div class="row">
+      {% if wishlist %}
+      {% for item in wishlist %}
+      <div class="col-6 col-md-3 wishlist-container">
+        <div class="heart-container">
+          <a class="account" href="/user/wishlist/delete/{{ item[0] }}"><i class="far fa-heart the-heart-icon"></i></a>
+        </div>
+        <img class="wishlist-items" src="{{ url_for('static',filename='img/' +item[3] + '/' + item[4] + '/' + item[5]) }}" alt="">
+        <p class="wishlist-info item-name">{{ item[1] }}</p>
+        <p class="wishlist-info category">{{ item[3] }}/{{ item[4] }}</p>
+        <p class="wishlist-info price">${{ item[2] }}</p>
+        <div class="view-details-btn">
+          <button type="button"  class="btn btn-light" name="button">View details</button>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p style="margin:0 auto;">Your wishlist is empty!</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
