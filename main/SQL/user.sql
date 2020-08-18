@@ -31,21 +31,37 @@ insert into Item(Item,Price,Categories,Subcategories,Image) values("Bottom 2","2
 insert into Item(Item,Price,Categories,Subcategories,Image) values("Bottom 3","56.34","clothing","bottom","bottom3.jpg");
 insert into Item(Item,Price,Categories,Subcategories,Image) values("Bottom 4","79.24","clothing","bottom","bottom4.jpg");
 
+
 -- Footwear -- Sneakers
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 1","12.24","clothing","dresses","dress1.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 2","42.24","clothing","dresses","dress2.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 3","67.24","clothing","dresses","dress3.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 4","45.24","clothing","dresses","dress4.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sneakers 1","12.24","footwear","sneakers","sneaker1.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sneakers 2","42.24","footwear","sneakers","sneaker2.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sneakers 3","67.24","footwear","sneakers","sneaker3.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sneakers 4","45.24","footwear","sneakers","sneaker4.jpg");
 -- Footwear -- Sandles
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 1","12.24","clothing","dresses","dress1.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 2","42.24","clothing","dresses","dress2.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 3","67.24","clothing","dresses","dress3.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 4","45.24","clothing","dresses","dress4.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sandles 1","34.24","footwear","sandles","sandle1.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sandles 3","12.24","footwear","sandles","sandle3.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sandles 2","67.24","footwear","sandles","sandle2.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sandles 4","43.24","footwear","sandles","sandle4.jpeg");
 -- Footwear -- Slippers
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 1","12.24","clothing","dresses","dress1.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 2","42.24","clothing","dresses","dress2.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 3","67.24","clothing","dresses","dress3.jpeg");
-insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 4","45.24","clothing","dresses","dress4.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("slippers 1","12.24","footwear","slippers","slipper1.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("slippers 2","42.24","footwear","slippers","slipper2.png");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("slippers 3","67.24","footwear","slippers","slipper3.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("slippers 4","45.24","footwear","slippers","slipper4.jpeg");
+
+
+-- Accessories --Sunglasses
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sunglass 1","12.24","accessories","sunglasses","sunglass1.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sunglass 2","43.24","accessories","sunglasses","sunglass2.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sunglass 3","12.24","accessories","sunglasses","sunglass3.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("sunglass 4","87.24","accessories","sunglasses","sunglass4.jpeg");
+
+-- Accessories --Watches
+insert into Item(Item,Price,Categories,Subcategories,Image) values("watch 1","122.24","accessories","watches","watch1.webp");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("watch 2","99.24","accessories","watches","watch2.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("watch 3","1000.24","accessories","watches","watch3.jpg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("watch 4","99.24","accessories","watches","watch4.jpg");
+
+-- END INSERT
 
 -- INSERT SIZE QUANTITIES INTO THE INVENTORY
 INSERT INTO Inventory(ItemID,Small,Med,Large,Xlarge) values(1,10,10,10,10);
