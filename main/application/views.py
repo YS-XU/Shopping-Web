@@ -35,12 +35,12 @@ def home():
 @app.route("/userhome/") #route to the account home page
 def userhome():
     #get the user object from the session
-    if 'user' not in session or session['user'] == None: #if the user is not logged in then they don't have access to this page
+    if not check_if_user_is_logged_in(): #if the user is not logged in then they don't have access to this page
         return redirect('/')
     else: #if user does exist, get the user's firstname from the session
         user = session.get('user')
-
-    return render_template("user/account.html",user=user)
+        wishlist = get_the_users_wishlist(session.get('id')) #get the wishlist from the database to determine if the user has one
+    return render_template("user/account.html",user=user,wishlist=wishlist)
 
 @app.route("/shoppingcart/")
 def shoppingcart():

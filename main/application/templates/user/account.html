@@ -12,7 +12,13 @@
     <div class="row">
       <div class="col-md-6">
         <h6>Wishlist</h6>
+        {% if wishlist %}
+        <div class="go-to-container">
+          <a class="go-to-link" href="/user/wishlist">Go to wishlist ></a>
+        </div>
+        {% else %}
         <p>Your wishlist is currently empty</p>
+        {% endif %}
         <hr>
       </div>
       <div class="col-md-6">

@@ -10,17 +10,6 @@ def get_all_users():
     # session['user'] = rv[1]
     return rv
 
-def get_the_users_wishlist(id): #function to get the user's wish list
-    cursor = get_cursor()
-    cursor.execute('SELECT * from Wishlist WHERE UserID = "{}"'.format(id))
-    rv = cursor.fetchall()
-    if not rv: #check if the tuple is empty, if it is return None
-        return None
-    else:
-        wishlist = get_the_wishlist_items_by_ids(rv)
-        return wishlist
-
-
 #---------------------
 # WISHLIST FUNCTIONS |
 #---------------------
@@ -32,6 +21,16 @@ def add_item_to_wishlist(userid,itemid): #function to add items to wishlist
         sql = 'INSERT INTO Wishlist(UserID,ItemID) values({},{})'.format(userid,itemid)
         insert_or_delete_database(sql)
 
+def get_the_users_wishlist(id): #function to get the user's wish list
+    cursor = get_cursor()
+    cursor.execute('SELECT * from Wishlist WHERE UserID = "{}"'.format(id))
+    rv = cursor.fetchall()
+    if not rv: #check if the tuple is empty, if it is return None
+        return None
+    else:
+        wishlist = get_the_wishlist_items_by_ids(rv)
+        return wishlist
+    
 def delete_item_from_wish_list(userid,itemid):
     sql = 'DELETE FROM Wishlist WHERE UserID={} AND ItemID={}'.format(userid,itemid)
     insert_or_delete_database(sql)
@@ -60,7 +59,7 @@ def check_if_item_already_exist_in_wishlist(userid,itemid): #function to check i
 #-------------------
 # HELPER FUNCTIONS |
 #-------------------
-def insert_or_delete_database(sql): #function to insert into the database
+def insert_or_delete_database(sql): #function to make database insertion or deletion
     connection = mysql.connection
     cursor = connection.cursor()
     cursor.execute(sql)

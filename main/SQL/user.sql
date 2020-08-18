@@ -31,6 +31,22 @@ insert into Item(Item,Price,Categories,Subcategories,Image) values("Bottom 2","2
 insert into Item(Item,Price,Categories,Subcategories,Image) values("Bottom 3","56.34","clothing","bottom","bottom3.jpg");
 insert into Item(Item,Price,Categories,Subcategories,Image) values("Bottom 4","79.24","clothing","bottom","bottom4.jpg");
 
+-- Footwear -- Sneakers
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 1","12.24","clothing","dresses","dress1.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 2","42.24","clothing","dresses","dress2.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 3","67.24","clothing","dresses","dress3.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 4","45.24","clothing","dresses","dress4.jpeg");
+-- Footwear -- Sandles
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 1","12.24","clothing","dresses","dress1.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 2","42.24","clothing","dresses","dress2.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 3","67.24","clothing","dresses","dress3.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 4","45.24","clothing","dresses","dress4.jpeg");
+-- Footwear -- Slippers
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 1","12.24","clothing","dresses","dress1.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 2","42.24","clothing","dresses","dress2.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 3","67.24","clothing","dresses","dress3.jpeg");
+insert into Item(Item,Price,Categories,Subcategories,Image) values("Dress 4","45.24","clothing","dresses","dress4.jpeg");
+
 -- INSERT SIZE QUANTITIES INTO THE INVENTORY
 INSERT INTO Inventory(ItemID,Small,Med,Large,Xlarge) values(1,10,10,10,10);
 INSERT INTO Inventory(ItemID,Small,Med,Large,Xlarge) values(2,10,10,10,10);
