@@ -30,6 +30,8 @@ def home():
     if session['user'] is not None:
         exist = session['user']
         print(exist)
+    
+    session['cart'] = []
     return render_template("index.html",user=exist)
 
 @app.route("/userhome/") #route to the account home page
@@ -42,9 +44,6 @@ def userhome():
         wishlist = get_the_users_wishlist(session.get('id')) #get the wishlist from the database to determine if the user has one
     return render_template("user/account.html",user=user,wishlist=wishlist)
 
-@app.route("/shoppingcart/")
-def shoppingcart():
-    return render_template("shoppingcart.html")
 
 @app.route("/signout/") #route to sign out the account
 def signout():
@@ -157,7 +156,7 @@ def payment_methods():
     return render_template('user/paymentmethod.html')
 
 
-# All route for user to access Clothing
+# All route to access Clothing
 @app.route('/items/clothing/bottom/') #route to the user to access clothing bottom
 def items_bottom():
     con = mysql.connection
@@ -195,6 +194,53 @@ def items_tops():
 
     return render_template('item/clothing/tops.html',item=item)
 
+# All route to access Footwear
+@app.route('/items/footwear/sneakers/') #route to the user to access sneakers
+def items_sneakers():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'sneakers'")
+    item = cursor.fetchall()
+
+    return render_template('item/footwear/sneakers.html',item=item)
+
+@app.route('/items/footwear/sandles/') #route to the user to access Sandles
+def items_sandles():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'sandles'")
+    item = cursor.fetchall()
+
+    return render_template('item/footwear/sandles.html',item=item)
+
+@app.route('/items/footwear/slippers/') #route to the user to access Slippers
+def items_slippers():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'slippers'")
+    item = cursor.fetchall()
+
+    return render_template('item/footwear/slippers.html',item=item)
+
+# All route to Accessories
+@app.route('/items/accessories/watches/') #route to the user to access watches
+def items_watches():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'watches'")
+    item = cursor.fetchall()
+
+    return render_template('item/accessories/watches.html',item=item)
+
+@app.route('/items/accessories/sunglasses/') #route to the user to access watches
+def items_sunglasses():
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Subcategories = 'sunglasses'")
+    item = cursor.fetchall()
+
+    return render_template('item/accessories/sunglasses.html',item=item)
+
 
 @app.route('/user/wishlist/') #route to the wishlist, ONLY logged in user can access their wishlist
 def wishlist_view():
@@ -217,6 +263,24 @@ def delete_from_wishlist(id):
         delete_item_from_wish_list(session['id'],id) #pass in the user id and the item id
         return redirect('/user/wishlist/')
     return '<h1>401- Unauthorized- Access is Denied</h1>', 401 #if user is not signed in, they don't have access to this route
+
+@app.route('/addtocart/<category>/<subcategory>/<int:id>') #route to add the item to the cart
+def add_to_cart(category, subcategory, id):
+    list_item = session['cart']
+    list_item.append(id)
+    print(list_item)
+    
+    session['cart'] = list_item
+    print(session['cart'])
+    return redirect('/items/{}/{}'.format(category, subcategory))
+
+@app.route("/shoppingcart/")
+def shoppingcart():
+    if session['cart']:
+        cart = get_item_to_cart(session['cart'])  
+    else:
+        cart = None
+    return render_template("shoppingcart.html", cart=cart)
 
 
 def check_if_user_is_logged_in(): #function to check if the user is logged in

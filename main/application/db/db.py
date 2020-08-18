@@ -55,6 +55,20 @@ def check_if_item_already_exist_in_wishlist(userid,itemid): #function to check i
     else:
         return False
 
+#------------------------
+# ADD TO CART FUNCTIONS |
+#------------------------
+
+def get_item_to_cart(itemid):
+    cursor = get_cursor()
+    sql = 'SELECT * from Item WHERE '
+    for i in itemid:
+        sql =  sql +  'ItemID={}'.format(i) +' OR ' 
+    sql = sql[0:len(sql)-3]
+    cursor.execute(sql)
+    cart = cursor.fetchall()
+    return cart
+
 
 #-------------------
 # HELPER FUNCTIONS |

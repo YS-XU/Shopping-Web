@@ -7,50 +7,40 @@
 {% block content %}
 <div class="container">
   <h2>SHOPPING BAG</h2>
+
+  {% if cart %}
   <div class="row">
+
     <table class="table">
       <thead class="thead-light">
         <tr>
-          <th scope="col">#</th>
+          <th scope="col"></th>
           <th scope="col">Item</th>
           <th scope="col">Quantities</th>
           <th scope="col">Prices</th>
         </tr>
       </thead>
+      
+      {% for item in cart %}
       <tbody>
         <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
+          <th class="cart-img" scope="row"><img class="card-img-clothing" src="{{ url_for('static', filename='img/clothing/top/' + item[5]) }}" alt="Card image cap"></th>
+          <td>{{ item[1] }}</td>
           <td><select class="custom-select" id="validationCustom04">
             <option value="1">1</option>
             <option value="2">2</option>
           </select></td>
-          <td>@mdo</td>
-        </tr>
-
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td><select class="custom-select" id="validationCustom04">
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select></td>
-          <td>@fat</td>
-        </tr>
-
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td><select class="custom-select" id="validationCustom04">
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select></td>
-          <td>@twitter</td>
+          <td>{{ item[2] }}</td>
         </tr>
 
       </tbody>
+      {% endfor %}
     </table>
   </div>
+  {% else %}
+  <p style="margin:0 auto; text-align: center;">Your Cart is empty!</p>
+  {% endif %}
+  
 
   <div class="row row-cols-2">
     <div class="col">Subtotal</div>

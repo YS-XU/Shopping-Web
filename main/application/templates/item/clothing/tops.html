@@ -8,10 +8,11 @@
       {% for i in item %}
       <div class="column">
         <div class="card">
-          <img class="card-img-top" src="{{ url_for('static', filename='img/clothing/top/' + i[5]) }}" alt="Card image cap">
+          <img class="card-img-clothing" src="{{ url_for('static', filename='img/clothing/top/' + i[5]) }}" alt="Card image cap">
           <h4>{{ i[1] }}</h4>
           <h5>${{ i[2] }}</h5>
-          <a href="/functiontoadd/{{i[0]}}"><button type="button" class="btn btn-secondary">Add to Cart</button></a>
+          <a href="/addtocart/clothing/tops/{{ i[0] }}"><button type="button" class="btn btn-secondary">Add to Cart</button></a>
+
           {% if session['user'] is not none %}
             <a class="account" href="/user/wishlist/clothing/tops/{{ i[0] }}"><i class="far fa-heart"></i></a>
           {% endif %}
