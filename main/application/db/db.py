@@ -30,7 +30,7 @@ def get_the_users_wishlist(id): #function to get the user's wish list
     else:
         wishlist = get_the_wishlist_items_by_ids(rv)
         return wishlist
-    
+
 def delete_item_from_wish_list(userid,itemid):
     sql = 'DELETE FROM Wishlist WHERE UserID={} AND ItemID={}'.format(userid,itemid)
     insert_or_delete_database(sql)
@@ -63,7 +63,7 @@ def get_item_to_cart(itemid):
     cursor = get_cursor()
     sql = 'SELECT * from Item WHERE '
     for i in itemid:
-        sql =  sql +  'ItemID={}'.format(i) +' OR ' 
+        sql =  sql +  'ItemID={}'.format(i) +' OR '
     sql = sql[0:len(sql)-3]
     cursor.execute(sql)
     cart = cursor.fetchall()
