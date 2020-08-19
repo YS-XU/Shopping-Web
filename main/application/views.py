@@ -31,7 +31,7 @@ def home():
         exist = session['user']
         print(exist)
     
-    session['cart'] = []
+    session['cart'] = None
     return render_template("index.html",user=exist)
 
 @app.route("/userhome/") #route to the account home page
@@ -266,22 +266,42 @@ def delete_from_wishlist(id):
 
 @app.route('/addtocart/<category>/<subcategory>/<int:id>') #route to add the item to the cart
 def add_to_cart(category, subcategory, id):
-    list_item = session['cart']
-    list_item.append(id)
-    print(list_item)
+    if session['cart']:
+        list_item = list(session['cart'])
+        list_item.append(id)
+        print(list_item)
+    else:
+        list_item = [id]
+
+    if check_if_user_is_logged_in():
+        add_item_to_user_cart(session['id'], id, "1")
     
-    session['cart'] = list_item
+    session['cart'] = tuple(list_item)
     print(session['cart'])
     return redirect('/items/{}/{}'.format(category, subcategory))
 
 @app.route("/shoppingcart/")
 def shoppingcart():
+    con = mysql.connection
+    cursor = con.cursor()
+
+    print(session['cart'])
+    if check_if_user_is_logged_in():
+        cursor.execute("SELECT ItemID FROM Cart WHERE UserID={}".format(session['id']))
+        item_list = []
+        for i in cursor.fetchall():
+            item_list.append(i[0])
+
+        session['cart'] = tuple(item_list)
+        print(session['cart'])
+    
+
     if session['cart']:
         cart = get_item_to_cart(session['cart'])  
     else:
         cart = None
     return render_template("shoppingcart.html", cart=cart)
-
+(5)
 
 def check_if_user_is_logged_in(): #function to check if the user is logged in
     try:
