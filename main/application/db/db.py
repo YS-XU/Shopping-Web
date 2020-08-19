@@ -69,6 +69,16 @@ def get_item_to_cart(itemid):
     cart = cursor.fetchall()
     return cart
 
+def add_item_to_user_cart(userid, itemid, quantity):
+    sql = "INSERT INTO Cart (UserID, ItemID, Quantity) VALUES ({}, {}, {})".format(userid, itemid, quantity)
+    insert_or_delete_database(sql)
+    
+#def get_item_from_user_cart(userid):
+#    cursor = get_cursor()
+#    sql = "SELECT ItemID FROM Cart WHERE UserID={}".format(userid)
+#    cursor.execute(sql)
+#    user_cart = cursor.fetchall()
+#    return user_cart
 
 #-------------------
 # HELPER FUNCTIONS |
