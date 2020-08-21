@@ -23,13 +23,30 @@ def add_item_to_wishlist(userid,itemid): #function to add items to wishlist
 
 def get_the_users_wishlist(id): #function to get the user's wish list
     cursor = get_cursor()
-    cursor.execute('SELECT * from Wishlist WHERE UserID = "{}"'.format(id))
+    sql = 'SELECT * from Wishlist WHERE UserID = "{}"'.format(id)
+    cursor.execute(sql)
     rv = cursor.fetchall()
     if not rv: #check if the tuple is empty, if it is return None
         return None
     else:
         wishlist = get_the_wishlist_items_by_ids(rv)
         return wishlist
+
+def get_all_item_ids_from_wishlist(userid,userhome=False): #function to get a list of itemm ids inside the user's wishlist
+    sql = 'SELECT ItemID FROM Wishlist WHERE UserID={}'.format(userid) #returns the item ids
+    cursor = get_cursor()
+    cursor.execute(sql)
+    list =   cursor.fetchall()
+    if userhome is True: #if the userhome route is calling this function, then just check if list is empty or not and return True or False
+        if list:
+            return True
+        else:
+            return False
+    else:
+        final = []
+        for i in list:
+            final.append(i[0])
+    return tuple(final)
 
 def delete_item_from_wish_list(userid,itemid):
     sql = 'DELETE FROM Wishlist WHERE UserID={} AND ItemID={}'.format(userid,itemid)
@@ -72,7 +89,7 @@ def get_item_to_cart(itemid):
 def add_item_to_user_cart(userid, itemid, quantity):
     sql = "INSERT INTO Cart (UserID, ItemID, Quantity) VALUES ({}, {}, {})".format(userid, itemid, quantity)
     insert_or_delete_database(sql)
-    
+
 #def get_item_from_user_cart(userid):
 #    cursor = get_cursor()
 #    sql = "SELECT ItemID FROM Cart WHERE UserID={}".format(userid)
@@ -88,7 +105,6 @@ def insert_or_delete_database(sql): #function to make database insertion or dele
     cursor = connection.cursor()
     cursor.execute(sql)
     connection.commit()
-    connection.close()
 
 def get_cursor(): #return the connection cursor
     connection = mysql.connection

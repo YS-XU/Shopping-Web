@@ -1,4 +1,4 @@
-from flask import  render_template,request,session,redirect,abort
+from flask import  render_template,request,session,redirect,flash
 from passlib.hash import sha256_crypt
 import os
 from application import app, mysql
@@ -30,7 +30,7 @@ def home():
     if session['user'] is not None:
         exist = session['user']
         print(exist)
-    
+
     session['cart'] = None
     return render_template("index.html",user=exist)
 
@@ -41,7 +41,8 @@ def userhome():
         return redirect('/')
     else: #if user does exist, get the user's firstname from the session
         user = session.get('user')
-        wishlist = get_the_users_wishlist(session.get('id')) #get the wishlist from the database to determine if the user has one
+        wishlist = get_all_item_ids_from_wishlist(session.get('id'),True) #get the wishlist from the database to determine if the user has one
+        print(wishlist)
     return render_template("user/account.html",user=user,wishlist=wishlist)
 
 
@@ -159,94 +160,113 @@ def payment_methods():
 # All route to access Clothing
 @app.route('/items/clothing/bottom/') #route to the user to access clothing bottom
 def items_bottom():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'bottom'")
     item = cursor.fetchall()
 
-    return render_template('item/clothing/bottom.html',item=item)
+    return render_template('item/clothing/bottom.html',item=item,wishlist=wishlist)
 
 
 @app.route('/items/clothing/dresses/') #route to the user to access clothing dresses
 def items_dresses():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'dresses'")
     item = cursor.fetchall()
 
-    return render_template('item/clothing/dresses.html',item=item)
+    return render_template('item/clothing/dresses.html',item=item,wishlist=wishlist)
 
 @app.route('/items/clothing/suits/') #route to the user to access suits
 def items_suits():
+    wishlist = []
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'suits'")
     item = cursor.fetchall()
 
-    return render_template('item/clothing/suits.html',item=item)
+    return render_template('item/clothing/suits.html',item=item,wishlist=wishlist)
 
 @app.route('/items/clothing/tops/') #route to the user to access tops
 def items_tops():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'top'")
     item = cursor.fetchall()
 
-    return render_template('item/clothing/tops.html',item=item)
+    return render_template('item/clothing/tops.html',item=item,wishlist=wishlist)
 
 # All route to access Footwear
 @app.route('/items/footwear/sneakers/') #route to the user to access sneakers
 def items_sneakers():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'sneakers'")
     item = cursor.fetchall()
 
-    return render_template('item/footwear/sneakers.html',item=item)
+    return render_template('item/footwear/sneakers.html',item=item,wishlist=wishlist)
 
 @app.route('/items/footwear/sandles/') #route to the user to access Sandles
 def items_sandles():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'sandles'")
     item = cursor.fetchall()
 
-    return render_template('item/footwear/sandles.html',item=item)
+    return render_template('item/footwear/sandles.html',item=item,wishlist=wishlist)
 
 @app.route('/items/footwear/slippers/') #route to the user to access Slippers
 def items_slippers():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'slippers'")
     item = cursor.fetchall()
 
-    return render_template('item/footwear/slippers.html',item=item)
+    return render_template('item/footwear/slippers.html',item=item,wishlist=wishlist)
 
 # All route to Accessories
 @app.route('/items/accessories/watches/') #route to the user to access watches
 def items_watches():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'watches'")
     item = cursor.fetchall()
 
-    return render_template('item/accessories/watches.html',item=item)
+    return render_template('item/accessories/watches.html',item=item,wishlist=wishlist)
 
 @app.route('/items/accessories/sunglasses/') #route to the user to access watches
 def items_sunglasses():
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
     cursor = con.cursor()
     cursor.execute("SELECT * FROM Item WHERE Subcategories = 'sunglasses'")
     item = cursor.fetchall()
 
-    return render_template('item/accessories/sunglasses.html',item=item)
+    return render_template('item/accessories/sunglasses.html',item=item,wishlist=wishlist)
 
 
 @app.route('/user/wishlist/') #route to the wishlist, ONLY logged in user can access their wishlist
 def wishlist_view():
     if check_if_user_is_logged_in():
-        wishlist = get_the_users_wishlist(session['id']) #get the list of the user's wishlist, pass in the users id
-        print(wishlist)
+        wishlist = get_the_users_wishlist(int(session['id'])) #get the list of the user's wishlist, pass in the users id
+        print(session['id'])
         return render_template('user/wishlist.html',wishlist=wishlist)
     return redirect('/register/')
 
@@ -254,6 +274,7 @@ def wishlist_view():
 def add_to_wishlist(category,subcategory,id): #pass in the cat,and subcat, to redirect to the right page, and id reference item
     if check_if_user_is_logged_in():
         add_item_to_wishlist(session['id'],id) #pass in the user id and the item id
+        flash('You addded an item to your wishlist!','success')
         return redirect('/items/{}/{}'.format(category,subcategory))
     return '<h1>401- Unauthorized- Access is Denied</h1>', 401 #if user is not signed in, they don't have access to this route
 
@@ -261,6 +282,7 @@ def add_to_wishlist(category,subcategory,id): #pass in the cat,and subcat, to re
 def delete_from_wishlist(id):
     if check_if_user_is_logged_in(): #check if the user is logged in
         delete_item_from_wish_list(session['id'],id) #pass in the user id and the item id
+        flash('You removed an item from your wishlist!','warning')
         return redirect('/user/wishlist/')
     return '<h1>401- Unauthorized- Access is Denied</h1>', 401 #if user is not signed in, they don't have access to this route
 
@@ -275,7 +297,7 @@ def add_to_cart(category, subcategory, id):
 
     if check_if_user_is_logged_in():
         add_item_to_user_cart(session['id'], id, "1")
-    
+
     session['cart'] = tuple(list_item)
     print(session['cart'])
     return redirect('/items/{}/{}'.format(category, subcategory))
@@ -294,14 +316,13 @@ def shoppingcart():
 
         session['cart'] = tuple(item_list)
         print(session['cart'])
-    
+
 
     if session['cart']:
-        cart = get_item_to_cart(session['cart'])  
+        cart = get_item_to_cart(session['cart'])
     else:
         cart = None
     return render_template("shoppingcart.html", cart=cart)
-(5)
 
 def check_if_user_is_logged_in(): #function to check if the user is logged in
     try:

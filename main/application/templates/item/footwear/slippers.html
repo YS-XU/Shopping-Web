@@ -12,9 +12,12 @@
           <h4>{{ i[1] }}</h4>
           <h5>${{ i[2] }}</h5>
           <a href="/addtocart/footwear/slippers/{{ i[0] }}"><button type="button" class="btn btn-secondary">Add to Cart</button></a>
-
           {% if session['user'] is not none %}
-            <a class="account" href="/user/wishlist/footwear/slippers/{{ i[0] }}"><i class="far fa-heart"></i></a>
+            {% if i[0] in wishlist %}
+              <a class="account" href="/user/wishlist/footwear/slippers/{{ i[0] }}"><i class="far fa-heart in-wish-list-already"></i></a>
+            {% else %}
+              <a class="account" href="/user/wishlist/footwear/slippers/{{ i[0] }}"><i class="far fa-heart"></i></a>
+            {% endif %}
           {% endif %}
         </div>
       </div>

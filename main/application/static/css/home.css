@@ -2,6 +2,26 @@ body {
   font-family: 'Rokkitt', serif !important;
 }
 
+/* flash messages  */
+.alert-success{
+  width: 20%;
+  float: right;
+}
+
+.alert-warning{
+  width: 20%;
+  float: right;
+  color: #bd4040;
+  background-color:#f7e7ea;
+  border-color:#f7e7ea;
+}
+@media screen and (max-width:1200px){
+  .alert-success,.alert-warning{
+    width: 100%;
+  }
+}
+/* end flash */
+
 h1.hi {
   text-align: center;
 }

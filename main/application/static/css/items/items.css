@@ -73,3 +73,7 @@ img {
 .card i:hover{
   color:pink;
 }
+/* style for icon for wishlist items */
+.in-wish-list-already{
+  color:pink;
+}
