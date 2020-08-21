@@ -160,6 +160,7 @@ def payment_methods():
 # All route to access Clothing
 @app.route('/items/clothing/bottom/') #route to the user to access clothing bottom
 def items_bottom():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
@@ -172,6 +173,7 @@ def items_bottom():
 
 @app.route('/items/clothing/dresses/') #route to the user to access clothing dresses
 def items_dresses():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
@@ -195,6 +197,7 @@ def items_suits():
 
 @app.route('/items/clothing/tops/') #route to the user to access tops
 def items_tops():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
@@ -207,6 +210,7 @@ def items_tops():
 # All route to access Footwear
 @app.route('/items/footwear/sneakers/') #route to the user to access sneakers
 def items_sneakers():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
@@ -218,6 +222,7 @@ def items_sneakers():
 
 @app.route('/items/footwear/sandles/') #route to the user to access Sandles
 def items_sandles():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
@@ -229,6 +234,7 @@ def items_sandles():
 
 @app.route('/items/footwear/slippers/') #route to the user to access Slippers
 def items_slippers():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
@@ -241,6 +247,7 @@ def items_slippers():
 # All route to Accessories
 @app.route('/items/accessories/watches/') #route to the user to access watches
 def items_watches():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
@@ -252,6 +259,7 @@ def items_watches():
 
 @app.route('/items/accessories/sunglasses/') #route to the user to access watches
 def items_sunglasses():
+    wishlist = []
     if check_if_user_is_logged_in():
         wishlist = get_all_item_ids_from_wishlist(session['id'])
     con = mysql.connection
