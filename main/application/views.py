@@ -314,6 +314,7 @@ def add_to_cart(category, subcategory, id):
 def shoppingcart():
     con = mysql.connection
     cursor = con.cursor()
+    subtotal = 0
 
     print(session['cart'])
     if check_if_user_is_logged_in():
@@ -325,12 +326,20 @@ def shoppingcart():
         session['cart'] = tuple(item_list)
         print(session['cart'])
 
-
+    
     if session['cart']:
         cart = get_item_to_cart(session['cart'])
+        for price in cart:
+            subtotal = subtotal + float(price[2])
     else:
         cart = None
-    return render_template("shoppingcart.html", cart=cart)
+
+    taxes = round(subtotal * 0.068, 2)
+    total = str(round(subtotal + taxes, 2))
+
+    taxes = str(taxes)
+    subtotal = str(subtotal)
+    return render_template("shoppingcart.html", cart=cart, subtotal=subtotal, taxes = taxes, total=total)
 
 def check_if_user_is_logged_in(): #function to check if the user is logged in
     try:

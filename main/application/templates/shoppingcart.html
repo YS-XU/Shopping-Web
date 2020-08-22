@@ -30,7 +30,7 @@
             <option value="1">1</option>
             <option value="2">2</option>
           </select></td>
-          <td>{{ item[2] }}</td>
+          <td>${{ item[2] }}</td>
         </tr>
 
       </tbody>
@@ -44,11 +44,11 @@
 
   <div class="row row-cols-2">
     <div class="col">Subtotal</div>
-    <div class="col prices">Column</div>
+    <div class="col prices">${{ subtotal }}</div>
     <div class="col">Taxes</div>
-    <div class="col prices">Column</div>
+    <div class="col prices">${{ taxes }}</div>
     <div class="col total-prices">Total</div>
-    <div class="col prices total-prices">Column</div>
+    <div class="col prices total-prices">${{ total }}</div>
   </div>
 
   <button type="button" class="btn btn-secondary">Check Out</button>
