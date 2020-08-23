@@ -1,0 +1,21 @@
+h1{
+  text-align: center;
+}
+
+.wrapper{
+  display: grid;
+  background-color: blue;
+  grid-template-columns: 100%;
+  line-height: 75%;
+  justify-items: center;
+}
+.Rectangle-glass{
+  display: grid;
+  background-color: red;
+
+  line-height: 75%;
+}
+.Rectangle-glass  ul li{
+   display: inline;
+   color: blue;
+}
