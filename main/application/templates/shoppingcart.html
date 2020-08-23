@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/shoppingcart.css') }}">
+{% endblock %}
+
+{% block title %} Shopping Cart {% endblock %}
+{% block content %}
+<div class="container">
+  <h2>SHOPPING BAG</h2>
+
+  {% if cart %}
+  <div class="row">
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Item</th>
+          <th scope="col">Quantities</th>
+          <th scope="col">Prices</th>
+        </tr>
+      </thead>
+      
+      {% for item in cart %}
+      <tbody>
+        <tr>
+          <th class="cart-img" scope="row"><img class="card-img-clothing" src="{{ url_for('static', filename='img/' + item[3] + '/' + item[4] + '/' + item[5]) }}" alt="Card image cap"></th>
+          <td>{{ item[1] }}</td>
+          <td><select class="custom-select" id="validationCustom04">
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select></td>
+          <td>${{ item[2] }}</td>
+        </tr>
+
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  {% else %}
+  <p style="margin:0 auto; text-align: center;">Your Cart is empty!</p>
+  {% endif %}
+  
+
+  <div class="row row-cols-2">
+    <div class="col">Subtotal</div>
+    <div class="col prices">${{ subtotal }}</div>
+    <div class="col">Taxes</div>
+    <div class="col prices">${{ taxes }}</div>
+    <div class="col total-prices">Total</div>
+    <div class="col prices total-prices">${{ total }}</div>
+  </div>
+
+  <button type="button" class="btn btn-secondary">Check Out</button>
+</div>
+
+{% endblock %}

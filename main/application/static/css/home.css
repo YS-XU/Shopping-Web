@@ -1,0 +1,64 @@
+body {
+  font-family: 'Rokkitt', serif !important;
+}
+
+/* flash messages  */
+.alert-success{
+  width: 20%;
+  float: right;
+}
+
+.alert-warning{
+  width: 20%;
+  float: right;
+  color: #bd4040;
+  background-color:#f7e7ea;
+  border-color:#f7e7ea;
+}
+@media screen and (max-width:1200px){
+  .alert-success,.alert-warning{
+    width: 100%;
+  }
+}
+/* end flash */
+
+h1.hi {
+  text-align: center;
+}
+
+a.navbar-brand {
+  color: black;
+  text-align: center;
+  display: block;
+  font-size: 50px;
+}
+
+nav.account {
+  text-align: right;
+}
+
+li.nav-item {
+  font-size: large;
+  margin-left: 50px;
+}
+
+ul.account {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+li.account {
+  display: inline;
+  margin-right: 20px;
+}
+
+a.account {
+  color: gray;
+  font-size: x-large;
+  margin: 10px;
+}
+
+img {
+  width: 100%;
+}

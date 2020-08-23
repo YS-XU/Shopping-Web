@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Slippers{% endblock %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static',filename='css/items/items.css') }}"> {% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+
+      {% for i in item %}
+      <div class="column">
+        <div class="card">
+          <img class="card-img-clothing" src="{{ url_for('static', filename='img/footwear/slippers/' + i[5]) }}" alt="Card image cap">
+          <h4>{{ i[1] }}</h4>
+          <h5>${{ i[2] }}</h5>
+          <a href="/addtocart/footwear/slippers/{{ i[0] }}"><button type="button" class="btn btn-secondary">Add to Cart</button></a>
+          {% if session['user'] is not none %}
+            {% if i[0] in wishlist %}
+              <a class="account" href="/user/wishlist/footwear/slippers/{{ i[0] }}"><i class="far fa-heart in-wish-list-already"></i></a>
+            {% else %}
+              <a class="account" href="/user/wishlist/footwear/slippers/{{ i[0] }}"><i class="far fa-heart"></i></a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+
+      </div>
+  </div>
+
+{% endblock %}

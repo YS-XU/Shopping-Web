@@ -1,0 +1,52 @@
+.container{    
+    margin: auto;
+    margin-top: 5%;
+    width: 70%;
+}
+
+h2{
+    text-align: center;
+}
+
+.btn-secondary{
+    text-align: center;
+    margin-top: 5%;
+    margin-left: 75%;
+    width: 10%;
+    height: 10%;
+    font-size: large;
+}
+
+.row-cols-2{
+    background-color: rgb(232, 232, 235);
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+
+.prices{
+    text-align: right;
+}
+
+.col{
+    margin-bottom: 3%;
+    font-size: large;
+}
+
+.total-prices{
+    font-size: large;
+    font-weight: bold;
+}
+
+.custom-select{
+    width: 20%;
+}
+
+.cart-img{
+    width: 25%;
+}
+
+.card-img-clothing{
+    width: 30%;
+}
