@@ -1,4 +1,5 @@
 from application import mysql
+from flask import session
 
 def get_all_users():
     cursor = get_cursor()
@@ -72,11 +73,33 @@ def check_if_item_already_exist_in_wishlist(userid,itemid): #function to check i
     else:
         return False
 
+
 #------------------------
 # ADD TO CART FUNCTIONS |
 #------------------------
 
-def get_item_to_cart(itemid):
+def get_item_to_cart_user(userid):
+    cursor = get_cursor()
+    #sql = 'SELECT * from Item WHERE '
+    sql = "SELECT Item.ItemID, Item, Price, Categories, Subcategories, Image, Quantity FROM Item JOIN Cart ON Item.ItemID = Cart.ItemID WHERE UserID={}".format(userid)
+    #for i in itemid:
+      #  sql =  sql +  'Item.ItemID={}'.format(i) +' OR '
+    #sql = sql[0:len(sql)-3]
+    cursor.execute(sql)
+    cart = cursor.fetchall()
+
+    new_cart = []
+    for price in cart:
+        price = list(price)
+        price[2] = str(round(float(price[2]) * float(price[6]), 2))
+        price = tuple(price)
+        new_cart.append(price)
+
+    #print(cart)
+    new_cart = tuple(new_cart)
+    return new_cart
+
+def get_item_to_cart_guest(itemid, item_quantity):
     cursor = get_cursor()
     sql = 'SELECT * from Item WHERE '
     for i in itemid:
@@ -84,18 +107,76 @@ def get_item_to_cart(itemid):
     sql = sql[0:len(sql)-3]
     cursor.execute(sql)
     cart = cursor.fetchall()
-    return cart
+
+    new_cart = []
+    count = 0
+    for item in cart:
+        item = list(item)
+        item.append(item_quantity[count])
+        
+        item[2] = str(round(float(item[2]) * float(item[6]), 2))
+        item = tuple(item)
+        new_cart.append(item)
+        count += 1
+
+    new_cart = tuple(new_cart)
+    return new_cart
+
+def get_item_from_user_cart(userid):
+    cursor = get_cursor()
+    cursor.execute("SELECT ItemID FROM Cart WHERE UserID={}".format(userid))
+    item_list = []
+    for i in cursor.fetchall():
+        item_list.append(i[0])
+
+    session['cart'] = tuple(item_list)
+
+def add_item_to_guest_cart(itemid, cart, quantity):
+    list_item = list(cart)
+    list_item_quantity = list(quantity)
+    for i in cart:
+        if i == itemid:
+            quantity
 
 def add_item_to_user_cart(userid, itemid, quantity):
-    sql = "INSERT INTO Cart (UserID, ItemID, Quantity) VALUES ({}, {}, {})".format(userid, itemid, quantity)
+    print(userid)
+    print(itemid)
+    if check_if_item_already_exist_in_cart(userid,itemid): #check if the item already exist in the wishlist, return if returns true
+        increase_quantity_user(itemid, userid)
+    else:
+        sql = "INSERT INTO Cart (UserID, ItemID, Quantity) VALUES ({}, {}, {})".format(userid, itemid, quantity)
+        insert_or_delete_database(sql)
+
+def increase_quantity_user(itemid, userid):
+    cursor = get_cursor()
+    cursor.execute("SELECT Quantity FROM Cart WHERE ItemID={} AND UserID={}".format(itemid, userid))
+    quantity = cursor.fetchone()
+    quantity = list(quantity)
+    quantity[0] = str(int(quantity[0] + 1))
+    quantity = tuple(quantity)
+    sql = "UPDATE Cart SET Quantity={} WHERE ItemID={} AND UserID={}".format(quantity[0], itemid, userid)
     insert_or_delete_database(sql)
 
-#def get_item_from_user_cart(userid):
-#    cursor = get_cursor()
-#    sql = "SELECT ItemID FROM Cart WHERE UserID={}".format(userid)
-#    cursor.execute(sql)
-#    user_cart = cursor.fetchall()
-#    return user_cart
+def decrease_quantity_user(itemid, userid):
+    cursor = get_cursor()
+    cursor.execute("SELECT Quantity FROM Cart WHERE ItemID={} AND UserID={}".format(itemid, userid))
+    quantity = cursor.fetchone()
+    quantity = list(quantity)
+    if quantity[0] > 1:
+        quantity[0] = str(int(quantity[0] - 1))
+    quantity = tuple(quantity)
+    sql = "UPDATE Cart SET Quantity={} WHERE ItemID={} AND UserID={}".format(quantity[0], itemid, userid)
+    insert_or_delete_database(sql)
+
+def check_if_item_already_exist_in_cart(userid, itemid):
+    cursor = get_cursor()
+    cursor.execute('SELECT * FROM Cart WHERE UserID={} AND ItemID={}'.format(userid,itemid))
+    list = cursor.fetchall()
+    if list: # if the list is not empty, the item already exist
+        return True
+    else:
+        return False
+
 
 #-------------------
 # HELPER FUNCTIONS |

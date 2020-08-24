@@ -9,6 +9,7 @@ from application.db.db import * #import everything from the db module
 load_dotenv(find_dotenv('.env')) #finds the .env file
 
 
+
 @app.route('/getdata') #route to test the database
 def data():
     con = mysql.connection
@@ -31,7 +32,10 @@ def home():
         exist = session['user']
         print(exist)
 
-    session['cart'] = None
+    if 'cart' and 'quantity' not in session:
+        session['cart'] = None
+        session['quantity'] = None
+
     return render_template("index.html",user=exist)
 
 @app.route("/userhome/") #route to the account home page
@@ -297,40 +301,48 @@ def delete_from_wishlist(id):
 @app.route('/addtocart/<category>/<subcategory>/<int:id>') #route to add the item to the cart
 def add_to_cart(category, subcategory, id):
     if session['cart']:
+        quantity_item = list(session['quantity'])
         list_item = list(session['cart'])
-        list_item.append(id)
-        print(list_item)
+        if id in session['cart']:
+            index = list_item.index(id)
+            quantity_item[index] = quantity_item[index] + 1
+        else:               
+            list_item.append(id)
+            quantity_item.append(1)       
+
     else:
         list_item = [id]
+        quantity_item = [1]
 
     if check_if_user_is_logged_in():
         add_item_to_user_cart(session['id'], id, "1")
 
+    print(list_item)
+    print(quantity_item)
     session['cart'] = tuple(list_item)
+    session['quantity'] = tuple(quantity_item)
     print(session['cart'])
     return redirect('/items/{}/{}'.format(category, subcategory))
 
 @app.route("/shoppingcart/")
 def shoppingcart():
-    con = mysql.connection
-    cursor = con.cursor()
+    #con = mysql.connection
+    #cursor = con.cursor()
     subtotal = 0
 
     print(session['cart'])
     if check_if_user_is_logged_in():
-        cursor.execute("SELECT ItemID FROM Cart WHERE UserID={}".format(session['id']))
-        item_list = []
-        for i in cursor.fetchall():
-            item_list.append(i[0])
-
-        session['cart'] = tuple(item_list)
-        print(session['cart'])
-
-    
+        get_item_from_user_cart(session['id'])
+            
     if session['cart']:
-        cart = get_item_to_cart(session['cart'])
-        for price in cart:
-            subtotal = subtotal + float(price[2])
+        if check_if_user_is_logged_in():
+            cart = get_item_to_cart_user(session['id'])
+            print(cart)
+        else:
+            cart = get_item_to_cart_guest(session['cart'], session['quantity'])
+            print(cart)
+        for price in cart:            
+            subtotal = round(subtotal + float(price[2]), 2)
     else:
         cart = None
 
@@ -339,7 +351,34 @@ def shoppingcart():
 
     taxes = str(taxes)
     subtotal = str(subtotal)
+   # print(cart)
     return render_template("shoppingcart.html", cart=cart, subtotal=subtotal, taxes = taxes, total=total)
+
+@app.route("/increase_quantity/<int:id>")
+def increase_quantity(id):
+    if check_if_user_is_logged_in():
+        increase_quantity_user(id, session['id'])
+    else:
+        quantity_item = list(session['quantity'])
+        index = session['cart'].index(id)
+        quantity_item[index] += 1
+        session['quantity'] = tuple(quantity_item)
+        
+    
+    return redirect('/shoppingcart/')
+
+@app.route("/decrease_quantity/<int:id>")
+def decrease_quantity(id):
+    if check_if_user_is_logged_in():
+        decrease_quantity_user(id, session['id'])
+    else:
+        quantity_item = list(session['quantity'])
+        index = session['cart'].index(id)
+        if quantity_item[index] > 1:
+            quantity_item[index] -= 1
+        session['quantity'] = tuple(quantity_item)
+    
+    return redirect('/shoppingcart/')
 
 def check_if_user_is_logged_in(): #function to check if the user is logged in
     try:

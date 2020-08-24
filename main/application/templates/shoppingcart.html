@@ -26,10 +26,11 @@
         <tr>
           <th class="cart-img" scope="row"><img class="card-img-clothing" src="{{ url_for('static', filename='img/' + item[3] + '/' + item[4] + '/' + item[5]) }}" alt="Card image cap"></th>
           <td>{{ item[1] }}</td>
-          <td><select class="custom-select" id="validationCustom04">
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select></td>
+          <td>
+            <a href="/decrease_quantity/{{ item[0] }}"><button type="button" class="btn btn-outline-secondary">-</button></a>
+            {{ item[6] }}
+            <a href="/increase_quantity/{{ item[0] }}"><button type="button" class="btn btn-outline-secondary">+</button></a>
+          </td>
           <td>${{ item[2] }}</td>
         </tr>
 
