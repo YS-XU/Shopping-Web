@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %} Invoice {% endblock %}
+{% block css %}
+<style media="screen">
+  .invoice-container {
+    margin-top: 30px;
+    margin-bottom: 45px;
+  }
+
+  .container {
+    margin-top: 5%;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+  }
+
+  .captain-h2 {
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .row {
+    margin: 0px 2px;
+  }
+
+  .row-cols-2 {
+    background-color: rgb(232, 232, 235);
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+  }
+
+  .prices {
+    text-align: right;
+  }
+
+  .col {
+    margin-bottom: 3%;
+    font-size: large;
+  }
+
+  .total-prices {
+    font-size: large;
+    font-weight: bold;
+  }
+
+  .custom-select {
+    width: 20%;
+  }
+
+  .cart-img {
+    width: 25%;
+  }
+
+  .card-img-clothing {
+    width: 30%;
+  }
+
+  h5 {
+    text-transform: uppercase;
+  }
+
+  .info-section {
+    margin: 40px 0px;
+    padding-top: 25px;
+  }
+
+  .invoice-logo-img {
+    width: 100%;
+  }
+
+  .info-paragraph {
+    margin: 0;
+  }
+
+
+  /* mobile */
+  @media screen and (max-width:768px) {
+    .info-paragraph {
+      font-size: 14px;
+    }
+
+    .logo-column {
+      text-align: center;
+      padding-top: 15px;
+    }
+
+    .invoice-logo-img {
+      width: 140px;
+    }
+
+    .info-section {
+      padding-top: 10px;
+      margin: 35px 0px;
+    }
+
+    .summary-column {
+      text-align: center;
+    }
+
+    .invoice-container{
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+</style>
+{% endblock %}
+{% block content %}
+<section class="invoice-container">
+  <div class="container">
+    <h2 class="captain-h2">Invoice #: 12321312111</h2>
+    <section class="info-section">
+      <div class="row">
+        <div class="col-6 col-md-5">
+          <h5>Business</h5>
+          <p class="info-paragraph">Web Store</p>
+          <p class="info-paragraph">webstore@gmail.com</p>
+          <p class="info-paragraph">Boston, MA</p>
+        </div>
+        <div class="col-6 col-md-5">
+          <h5>Ship To</h5>
+          <p class="info-paragraph">Jimmy Tran</p>
+          <p class="info-paragraph">98 Peabody Street</p>
+          <p class="info-paragraph">Medford, MA 02155</p>
+        </div>
+        <div class="col-12 col-md-2 logo-column">
+          <img class="invoice-logo-img" src="{{ url_for('static',filename='img/logo1.png') }}" alt="">
+        </div>
+      </div>
+    </section>
+    <div class="row">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Item</th>
+            <th scope="col">Quantities</th>
+            <th scope="col">Prices</th>
+          </tr>
+        </thead>
+
+        {% for item in range(3) %}
+        <tbody>
+          <tr>
+            <th class="cart-img" scope="row"><img class="card-img-clothing" src="{{ url_for('static', filename='img/clothing/top/shirt1.png') }}" alt="Card image cap"></th>
+            <td>{{ item }}</td>
+            <td>1</td>
+            <td>${{ item }}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+      </div>
+      <div class="summary-column col-6 col-md-3">
+        <strong>
+          <p>Subtotal:</p>
+        </strong>
+      </div>
+      <div class="summary-column col-6 col-md-3">
+        <p>$100</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+      </div>
+      <div class="summary-column col-6 col-md-3">
+        <strong>
+          <p>Tax:</p>
+        </strong>
+      </div>
+      <div class="summary-column col-6 col-md-3">
+        <p>$100</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+      </div>
+      <div class="summary-column col-6 col-md-3">
+        <strong>
+          <p>Total:</p>
+        </strong>
+      </div>
+      <div class="summary-column col-6 col-md-3">
+        <p>$100</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
