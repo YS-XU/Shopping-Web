@@ -1,77 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
   <meta charset="utf-8">
   <title></title>
   <link rel="stylesheet" href="Css/style.css">
 </head>
-
 <body>
-  <h1>CEHCKOUT</h1>
-  <section class="wrapper">
-    <input type="text" name="" value="" placeholder="SIGN IN">
-    <input type="text" name="" value="" placeholder="DELIVERY">
-  </section>
-  <section>
-    <input type="text" name="" value="">
-    <input type="text" name="" value="">
-  </section>
-  <section>
-    <form action="" method="get" class="form-example">
-      <div class="form-example">
-        <!-- <label for="name" >Enter your name: </label> -->
-        <input type="text" name="name" id="name" placeholder="First name" required>
-      </div>
-      <div class="form-example">
-        <!-- <label for="email">Enter your email: </label> -->
-        <input type="email" name="email" id="email" placeholder="Last name" required>
-      </div>
-      <div class="form-example">
-        <input type="submit" value="Subscribe!">
-      </div>
-      <button type="button" name="button">CONTINUE TO SHIPPING OPTIONS</button>
-    </form>
-  </section>
-  <section class="Rectangle-glass">
-    <h4>RECTANGLE SUNGLASSES</h4>
-    <span>Standard</span>
-    <ul>
-      <li>Edit</li>
-      <li>Remove</li>
-      <li>Move to websites</li>
-    </ul>
-    <section class="order-Summary">
-      <div>
-        <select class="" name="">
-          <option value="">Qty 1</option>
-        </select>
-      </div>
-    </section>
-    <section>
-      <div class="">
-        <span>Subtotal</span>
-        <h5>Taxes</h5>
-        <span>Information</span>
-        <h5>Delievery</h5>
-        <span>Information</span>
-
-        <h4>Total</h4>
-      </div>
-    </section>
-  </section>
-  <section>
-    <ul>
-      <li>Taxes</li>
-      <span>Information</span>
-    </ul>
-
-    <ul>
-      <li>Taxes</li>
-      <span>Information</span>
-    </ul>
+  <h1>CHEKOUT</h1>
+  <section class="inputForms">
+    <label for="name">1. SIGN IN </label>
+    <input type="text" id="name" name="name" required>
+    <label for="name">2. DELIVERY</label>
+    <input type="text" id="name" name="name" required>
+    <figcaption>we only ship to address within the united states</figcaption>
+    <input class="size" type="text" name="" placeholder="First Name"value="">
+    <input class="size" type="text" name="" placeholder="Last Name" value="">
+    <input class="displayInputBlock"type="text" placeholder="Address" name="" value="">
+    <input type="displayInputBlock" name="" placeholder="Apt, suite, floor,etc(optional)" value="">
+    <div class="checkBox">
+      <!-- <input type="checkbox" id="scales" name="scales"> -->
+      <label for="scales">Scales</label>
+    </div>
+    <input class="sizeInputBottom" type="text" name="" placeholder="Zip code"value="">
+    <select id="pet-select">
+      <option value="">Alabama</option>
+      <option value="dog">Indiana</option>
+      <option value="cat">Maryland</option>
+      <option value="hamster"> Minnesota</option>
+      <option value="parrot">Missouri</option>
+      <option value="spider">New Hampshires</option>
+      <option value="goldfish">North Carolina</option>
+    </select>   <input class="sizeInputBottom" type="text" name="" placeholder="City"value="">
+    <input class="submitButton"type="submit" value="CONTINUE TO SHIPPING OPTIONS">
   </section>
 
+  <section class="rightSection">
+    <label for="name">ORDER SUMMARY </label>
+    <input class="InputRightSection"type="text" id="name" name="name" required>
+  </section>
 </body>
-
 </html>
