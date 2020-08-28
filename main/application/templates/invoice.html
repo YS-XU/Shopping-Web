@@ -108,7 +108,7 @@
 {% block content %}
 <section class="invoice-container">
   <div class="container">
-    <h2 class="captain-h2">Invoice #: 12321312111</h2>
+    <h2 class="captain-h2">Invoice #: {{ info[1] }}</h2>
     <section class="info-section">
       <div class="row">
         <div class="col-6 col-md-5">
@@ -119,9 +119,9 @@
         </div>
         <div class="col-6 col-md-5">
           <h5>Ship To</h5>
-          <p class="info-paragraph">Jimmy Tran</p>
-          <p class="info-paragraph">98 Peabody Street</p>
-          <p class="info-paragraph">Medford, MA 02155</p>
+          <p class="info-paragraph">{{ info[3] }}</p>
+          <p class="info-paragraph">{{ info[4] }}</p>
+          <p class="info-paragraph">{{ info[5] }},{{ info[6] }} {{  info[7] }}</p>
         </div>
         <div class="col-12 col-md-2 logo-column">
           <img class="invoice-logo-img" src="{{ url_for('static',filename='img/logo1.png') }}" alt="">
@@ -139,13 +139,13 @@
           </tr>
         </thead>
 
-        {% for item in range(3) %}
+        {% for item in items %}
         <tbody>
           <tr>
-            <th class="cart-img" scope="row"><img class="card-img-clothing" src="{{ url_for('static', filename='img/clothing/top/shirt1.png') }}" alt="Card image cap"></th>
-            <td>{{ item }}</td>
-            <td>1</td>
-            <td>${{ item }}</td>
+            <th class="cart-img" scope="row"><img class="card-img-clothing" src="{{ url_for('static', filename='img/'+ item[3] +'/'+ item[4] + '/'+ item[5] ) }}" alt="Card image cap"></th>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[6] }}</td>
+            <td>${{ item[2] }}</td>
           </tr>
         </tbody>
         {% endfor %}

@@ -73,6 +73,58 @@ def check_if_item_already_exist_in_wishlist(userid,itemid): #function to check i
     else:
         return False
 
+#----------------------------
+# PROCESS PAYMENT FUNCTIONS |
+#----------------------------
+def save_invoice(userid,ordernum,date,buyer,street,city,state,zip,country,price): #func to save invoice after payment proccess
+    sql = 'INSERT INTO Invoice(UserID,OrderNumber,Dates,Buyer,Street,City,State,Zipcode,Country,Price) VALUES({},"{}","{}","{}","{}","{}","{}","{}","{}","{}");'.format(
+    userid,ordernum,date,buyer,street,city,state,zip,country,price
+    )
+    insert_or_delete_database(sql)
+
+def retrieve_invoice(order): #func to get the invoice info
+    cursor = get_cursor();
+    cursor.execute('SELECT * FROM Invoice WHERE OrderNumber={};'.format(order))
+    order_list = cursor.fetchall()
+    print(order_list)
+    return order_list
+
+def save_user_credit_card(userid,cc,fullname): #func to save the user's credit card crudentials
+    #check if the credit card already exists
+    if user_credit_card_exists(userid): # don't do anything if a credit card already exists
+        return
+    else: # save the user credit card if it does not exist
+        sql = 'INSERT INTO Creditcard(UserID,Card,Fullname,Dates,Csc) VALUES({},"{}","{}","{}","{}");'.format(userid,cc[0],fullname,cc[1],cc[2])
+        insert_or_delete_database(sql)
+
+def empty_user_cart_after_purchase(userid): #func to empty out the user's cart after purchase
+    sql = 'DELETE FROM Cart WHERE UserID={};'.format(userid)
+    insert_or_delete_database(sql)
+
+def user_credit_card_exists(userid): #boolean func to check if the user credit card already exists
+    sql = 'SELECT * FROM Creditcard WHERE UserID={};'.format(userid)
+    cursor = get_cursor()
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    if data:
+        return True
+    else:
+        return False
+
+def get_the_user_submission_invoice(userid,ordernumber):
+    cursor = get_cursor()
+    #get the items from the user;s CART
+    sql = 'SELECT * FROM Invoice WHERE OrderNumber={}'.format(ordernumber)
+    cursor.execute(sql)
+    invoice = cursor.fetchall()
+    items = get_item_to_cart_user(userid)
+    data = {
+        'invoice':invoice[0],
+        'items':items
+    }
+    empty_user_cart_after_purchase(userid)
+    return data
+
 
 #------------------------
 # ADD TO CART FUNCTIONS |
@@ -97,6 +149,7 @@ def get_item_to_cart_user(userid):
 
     #print(cart)
     new_cart = tuple(new_cart)
+    print(new_cart)
     return new_cart
 
 def get_item_to_cart_guest(itemid, item_quantity):
@@ -113,7 +166,7 @@ def get_item_to_cart_guest(itemid, item_quantity):
     for item in cart:
         item = list(item)
         item.append(item_quantity[count])
-        
+
         item[2] = str(round(float(item[2]) * float(item[6]), 2))
         item = tuple(item)
         new_cart.append(item)

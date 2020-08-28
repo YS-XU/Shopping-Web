@@ -1,4 +1,5 @@
-from flask import  render_template,request,session,redirect,flash
+from flask import render_template,request,session,redirect,flash,jsonify,url_for
+import random
 from passlib.hash import sha256_crypt
 import os
 from application import app, mysql
@@ -7,8 +8,6 @@ from dotenv import load_dotenv,find_dotenv
 from application.db.db import * #import everything from the db module
 
 load_dotenv(find_dotenv('.env')) #finds the .env file
-
-
 
 @app.route('/getdata') #route to test the database
 def data():
@@ -86,7 +85,6 @@ def signup():
         con.commit()
         return redirect('/register/')
 
-
 @app.route("/login/", methods=['POST']) #route to the register page
 def login():
     if request.method == 'POST':
@@ -112,6 +110,9 @@ def login():
             loginError = "Enter the valid Email or Password"
         return render_template("register.html", loginError=loginError)
 
+#----------------------------
+#  USER SETTINGS HANDLERS   |
+#----------------------------
 @app.route('/personal/') #route to the user's personal settings page
 def personal_details():
     #get the user object from the session
@@ -160,7 +161,9 @@ def payment_methods():
         return redirect('/')
     return render_template('user/paymentmethod.html')
 
-
+#----------------------------
+# ITEMS WEBPAGES HANDLERS   |
+#----------------------------
 # All route to access Clothing
 @app.route('/items/clothing/bottom/') #route to the user to access clothing bottom
 def items_bottom():
@@ -173,7 +176,6 @@ def items_bottom():
     item = cursor.fetchall()
 
     return render_template('item/clothing/bottom.html',item=item,wishlist=wishlist)
-
 
 @app.route('/items/clothing/dresses/') #route to the user to access clothing dresses
 def items_dresses():
@@ -273,7 +275,9 @@ def items_sunglasses():
 
     return render_template('item/accessories/sunglasses.html',item=item,wishlist=wishlist)
 
-
+#----------------------------
+#     WISHLIST HANDLERS     |
+#----------------------------
 @app.route('/user/wishlist/') #route to the wishlist, ONLY logged in user can access their wishlist
 def wishlist_view():
     if check_if_user_is_logged_in():
@@ -298,39 +302,82 @@ def delete_from_wishlist(id):
         return redirect('/user/wishlist/')
     return '<h1>401- Unauthorized- Access is Denied</h1>', 401 #if user is not signed in, they don't have access to this route
 
-@app.route('/invoice/')
-def invoice():
-    return render_template('invoice.html')
 
-@app.route('/processpayment/',methods=['POST']) #route to handle the payment proccess
+#----------------------------
+# PROCESS PAYMENT HANDLERS  |
+#----------------------------
+@app.route('/shopping/checkout/',methods=['POST','GET']) #this is a test route to put in info before submitting payment
+def shopping_checkout_page():
+    try:
+        if session.get('proccessing') is False:
+            return redirect(url_for('shoppingcart'))
+    except Exception:
+        return redirect(url_for('shoppingcart'))
+
+    if request.method == 'GET':
+        return render_template('testinginvoice.html')
+    elif request.method == 'POST':
+        return '<h1>405 Method Now Allowed</h1>',405
+
+@app.route('/processpayment/',methods=['POST']) #set the session proccessing to true, then redirect to the checkout page
+def save_key_to_proccess():
+    session['proccessing'] = True #setting the processing to true
+    return redirect(url_for('process_the_payment'),code=307) #redirecting to the process payment handler, passing in 307 code to reserve the DATA from FORM
+
+@app.route('/shopping/checkout/submit',methods=['POST','GET']) #route to handle the payment proccess
 def process_the_payment():
     if request.method == 'POST':
-        # get the credit card inputs from the fields
+        # CREDIT CARD INFO FROM WEBPAGE
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
         csc = request.form.get('csc')
         date = request.form.get('date')
         cardnumber = request.form.get('cardnumber')
-        # get the user shipping information
+
+        #SHIPPING INFO FROM WEBPAGE
         street = request.form.get('street')
-        city = request.form.get('citystate')
-        state = request.form.get('street')
+        city = request.form.get('city')
+        state = request.form.get('state')
         zipcode = request.form.get('zipcode')
         country = request.form.get('country')
-        price = request.form.get('price')
-        if check_if_user_is_logged_in(): #check if it is a member purchase
-            cc = [cardnumber,date,csc] # create a list with the cc information inside
-            save_user_credit_card(session.get('id'),cc) #save the user's credit card information -- pass in user id and cc list
-            #get the items from the users cart
-            #empty out the users cart in the DB
-            #pass the item and the invoice info in to the webpage
-            print(get_item_to_cart(session.get('cart')))
-            return render_template('user/invoice.html')
-        else: #guess purchase -- get the
+        # price = request.form.get('price')
+        price = '$123'
+        order = "%.9d" % random.randint(0,9999999999) #generate a random 10 digit invoice #
+
+        #validate to see if the user is a member or guest
+        if check_if_user_is_logged_in():
+            cc = [cardnumber,date,csc]  # create a list with the cc information inside
+            save_user_credit_card(session.get('id'),cc,'{} {}'.format(firstname,lastname)) #save the user's credit card information -- pass in user id and cc list
+            save_invoice(session.get('id'),order,date,'{} {}'.format(firstname,lastname),street,city,state,zipcode,country,price) #save the user's order in record
+            info = get_the_user_submission_invoice(session.get('id'),order) #get the users order
+            session['info'] = info #store the invoice info into the session
+            return redirect(url_for('show_user_invoice'),code=302)#redirect to the invoice page, passing in the order number
+        else: # IF GUEST purchase -- return the invoice -- NEED TO FINISH
+            # return render_template('user/invoice.html',info=info)
+            return 'guest checkout'
             pass
-    else:
+    elif request.method == 'GET':
         return '<h1>405 Method Now Allowed</h1>',405 #pass in not allowed method content and 405 status code
 
+@app.route('/paymentproccess/complete/invoices/') #handler for showing the invoice page with data
+def show_user_invoice():
+    try:
+        info = session['info']
+        finish_processing()
+    except Exception:
+        return redirect(url_for('shoppingcart'))
+    return render_template('invoice.html',info=info['invoice'],items=info['items'])
+
+def finish_processing():#func to change the proccessing to False and delete the info after payment is processed
+    try:
+        session['proccessing'] = False
+        del session['info']
+    except KeyError:
+        return
+
+#----------------------------
+#   ADD TO CART HANDLERS    |
+#----------------------------
 @app.route('/addtocart/<category>/<subcategory>/<int:id>') #route to add the item to the cart
 def add_to_cart(category, subcategory, id):
     if session['cart']:
@@ -342,14 +389,12 @@ def add_to_cart(category, subcategory, id):
         else:
             list_item.append(id)
             quantity_item.append(1)
-
     else:
         list_item = [id]
         quantity_item = [1]
 
     if check_if_user_is_logged_in():
         add_item_to_user_cart(session['id'], id, "1")
-
     print(list_item)
     print(quantity_item)
     session['cart'] = tuple(list_item)
@@ -362,7 +407,7 @@ def shoppingcart():
     #con = mysql.connection
     #cursor = con.cursor()
     subtotal = 0
-
+    session['proccessing'] = True
     print(session['cart'])
     if check_if_user_is_logged_in():
         get_item_from_user_cart(session['id'])
@@ -397,7 +442,6 @@ def increase_quantity(id):
         quantity_item[index] += 1
         session['quantity'] = tuple(quantity_item)
 
-
     return redirect('/shoppingcart/')
 
 @app.route("/decrease_quantity/<int:id>")
@@ -410,7 +454,6 @@ def decrease_quantity(id):
         if quantity_item[index] > 1:
             quantity_item[index] -= 1
         session['quantity'] = tuple(quantity_item)
-
     return redirect('/shoppingcart/')
 
 def check_if_user_is_logged_in(): #function to check if the user is logged in

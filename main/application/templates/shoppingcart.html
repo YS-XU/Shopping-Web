@@ -20,7 +20,7 @@
           <th scope="col">Prices</th>
         </tr>
       </thead>
-      
+
       {% for item in cart %}
       <tbody>
         <tr>
@@ -41,7 +41,7 @@
   {% else %}
   <p style="margin:0 auto; text-align: center;">Your Cart is empty!</p>
   {% endif %}
-  
+
 
   <div class="row row-cols-2">
     <div class="col">Subtotal</div>
@@ -52,7 +52,10 @@
     <div class="col prices total-prices">${{ total }}</div>
   </div>
 
-  <button type="button" class="btn btn-secondary">Check Out</button>
+  <form class="" action="{{ url_for('shopping_checkout_page') }}" method="GET">
+    <button type="submit" class="btn btn-secondary">Check Out</button>
+  </form>
+
 </div>
 
 {% endblock %}
