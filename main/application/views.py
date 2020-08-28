@@ -165,7 +165,7 @@ def payment_methods():
 # ITEMS WEBPAGES HANDLERS   |
 #----------------------------
 # All route to access Clothing
-@app.route('/items/clothing/')
+@app.route('/items/clothing/allClothing/')
 def items_clothing():
     wishlist = []
     if check_if_user_is_logged_in():
@@ -226,7 +226,7 @@ def items_tops():
     return render_template('item/clothing/tops.html',item=item,wishlist=wishlist)
 
 # All route to access Footwear
-@app.route('/items/foortwear/')
+@app.route('/items/footwear/allFootwear/')
 def items_footwear():
     wishlist = []
     if check_if_user_is_logged_in():
@@ -275,7 +275,7 @@ def items_slippers():
     return render_template('item/footwear/slippers.html',item=item,wishlist=wishlist)
 
 # All route to Accessories
-@app.route('/items/accessories/')
+@app.route('/items/accessories/allAccessories/')
 def items_accessories():
     wishlist = []
     if check_if_user_is_logged_in():
