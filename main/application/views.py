@@ -165,6 +165,18 @@ def payment_methods():
 # ITEMS WEBPAGES HANDLERS   |
 #----------------------------
 # All route to access Clothing
+@app.route('/items/clothing/')
+def items_clothing():
+    wishlist = []
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Categories = 'clothing'")
+    item = cursor.fetchall()
+
+    return render_template('item/clothing/allClothing.html',item=item,wishlist=wishlist)
+
 @app.route('/items/clothing/bottom/') #route to the user to access clothing bottom
 def items_bottom():
     wishlist = []
@@ -214,6 +226,18 @@ def items_tops():
     return render_template('item/clothing/tops.html',item=item,wishlist=wishlist)
 
 # All route to access Footwear
+@app.route('/items/foortwear/')
+def items_footwear():
+    wishlist = []
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Categories = 'footwear'")
+    item = cursor.fetchall()
+
+    return render_template('item/footwear/allFootwear.html',item=item,wishlist=wishlist)
+
 @app.route('/items/footwear/sneakers/') #route to the user to access sneakers
 def items_sneakers():
     wishlist = []
@@ -251,6 +275,18 @@ def items_slippers():
     return render_template('item/footwear/slippers.html',item=item,wishlist=wishlist)
 
 # All route to Accessories
+@app.route('/items/accessories/')
+def items_accessories():
+    wishlist = []
+    if check_if_user_is_logged_in():
+        wishlist = get_all_item_ids_from_wishlist(session['id'])
+    con = mysql.connection
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM Item WHERE Categories = 'accessories'")
+    item = cursor.fetchall()
+
+    return render_template('item/accessories/allAccessories.html',item=item,wishlist=wishlist)
+
 @app.route('/items/accessories/watches/') #route to the user to access watches
 def items_watches():
     wishlist = []
