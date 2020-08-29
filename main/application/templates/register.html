@@ -5,79 +5,79 @@
 {% endblock %}
 {% block content %}
   <!-- Login component -->
-  <div class="container">
-    <div class="login-register-form">
-      <div class="panel-heading">
-        <h2 style="padding:20px;" >ACCOUNT</h2>
-        <div class="row">
-          <div class="col-xs-6">
-            <a href="#" class="active" onclick="showLogin();" id="login-view-btn">Login</a>
+  <section class="main-login-register-section">
+      <div class="login-register-form">
+        <div class="panel-heading">
+          <h2 style="padding:20px;" >ACCOUNT</h2>
+          <div class="row">
+            <div class="col-xs-6">
+              <a href="#" class="active" onclick="showLogin();" id="login-view-btn">Login</a>
 
-          </div>
-          <div class="col-xs-6">
-            <a href="#" onclick="showRegister();" id="register-view-btn">Register</a>
-          </div>
-        </div>
-      </div>
-      <div class="login-container" id="login-container">
-        <form action="/login/" method="post" class="login-form">
-          <div class="form-group">
-            {% if loginError %}
-            <p style="color:red;">{{ loginError }}</p>
-            {% endif %}
-
-            {% if existError %}
-            <p style="color:red;">{{ existError }}</p>
-            {% endif %}
-
-            <p class="prompt-msg">Sign in with your email and password.</p>
-            <label for="exampleInputEmail1">Email address</label>
-            <input name="username" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input name="password" type="password" class="form-control" id="exampleInputPassword1" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-      </div>
-
-      <!-- Register component -->
-      <div class="register-container" id="register-container">
-        <form method="POST" action="/signup/" class="login-form">
-          {% if existError %}
-            <p style="color:red;">{{ existError }}</p>
-          {% endif %}
-          <p class="prompt-msg">Welcome, create an account with us!</p>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email</label>
-            <input name="Email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp" required>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">First Name</label>
-            <input name="Firstname" type="text" class="form-control" id="exampleInputEmail1" placeholder="First name" required>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Last name</label>
-            <input name="Lastname" type="text" class="form-control" id="exampleInputEmail1" placeholder="Last name" required>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input name="Passwords" type="password" onchange="checkIfMatch();" class="form-control" placeholder="password" id="password1" required>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Re-enter Password</label>
-            <input type="password" onchange="checkIfMatch();"  class="form-control" placeholder="password" id="password2" required>
-            <div class="" id="password-error-container" >
-              <span style="color:red;">Passwords do not match!</span>
+            </div>
+            <div class="col-xs-6">
+              <a href="#" onclick="showRegister();" id="register-view-btn">Register</a>
             </div>
           </div>
-          <button id="register-btn" type="submit" class="btn btn-primary">Register</button>
-        </form>
-      </div>
+        </div>
+        <div class="login-container" id="login-container">
+          <form action="/login/" method="post" class="login-form">
+            <div class="form-group">
+              {% if loginError %}
+              <p style="color:red;">{{ loginError }}</p>
+              {% endif %}
 
-    </div>
-  </div>
+              {% if existError %}
+              <p style="color:red;">{{ existError }}</p>
+              {% endif %}
+
+              <p class="prompt-msg">Sign in with your email and password.</p>
+              <label for="exampleInputEmail1">Email address</label>
+              <input name="username" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input name="password" type="password" class="form-control" id="exampleInputPassword1" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+
+        <!-- Register component -->
+        <div class="register-container" id="register-container">
+          <form method="POST" action="/signup/" class="login-form">
+            {% if existError %}
+              <p style="color:red;">{{ existError }}</p>
+            {% endif %}
+            <p class="prompt-msg">Welcome, create an account with us!</p>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email</label>
+              <input name="Email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" aria-describedby="emailHelp" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">First Name</label>
+              <input name="Firstname" type="text" class="form-control" id="exampleInputEmail1" placeholder="First name" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Last name</label>
+              <input name="Lastname" type="text" class="form-control" id="exampleInputEmail1" placeholder="Last name" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input name="Passwords" type="password" onchange="checkIfMatch();" class="form-control" placeholder="password" id="password1" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Re-enter Password</label>
+              <input type="password" onchange="checkIfMatch();"  class="form-control" placeholder="password" id="password2" required>
+              <div class="" id="password-error-container" >
+                <span style="color:red;">Passwords do not match!</span>
+              </div>
+            </div>
+            <button id="register-btn" type="submit" class="btn btn-primary">Register</button>
+          </form>
+        </div>
+
+      </div>
+  </section>
   {% block js %}
   <script src="{{ url_for('static',filename='js/register.js') }}"></script>
   {% endblock %}

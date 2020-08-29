@@ -10,29 +10,29 @@ hideSpan(); // Hide the error message span
 
 function checkIfMatch(){
   if(document.getElementById('password1').value !== document.getElementById('password2').value){ //if both password fields dont match then ... display the error message, disable the register button
-      error_span_msg.style.display = '';
+      error_span_msg.hidden = false;
       register_btn.disabled = true;
   }
   else{
-    error_span_msg.style.display = 'none'; //else enable the register button and hide the error message
+    error_span_msg.hidden = true; //else enable the register button and hide the error message
     register_btn.disabled = false;
   }
 }
 
 function hideSpan(){ //Function to hide the span
-  error_span_msg.style.display = 'none';
+  error_span_msg.hidden = true;
 }
 
 function showLogin() { //disable register and enable log in, change font sizes -- change bottom border
-  register_container.style.display = 'none';
-  login_container.style.display = '';
+  register_container.hidden = true;
+  login_container.hidden = false;
   login_view_button.style.borderBottom = "3px solid black";
   register_view_button.style.borderBottom = "1px solid grey"
 }
 
 function showRegister() { //disable login  and enable register -- change the bottom border
-  register_container.style.display = '';
-  login_container.style.display = 'none';
+  register_container.hidden =false;
+  login_container.hidden = true;
   register_view_button.style.borderBottom = "3px solid black";
   login_view_button.style.borderBottom = "1px solid grey"
 }
