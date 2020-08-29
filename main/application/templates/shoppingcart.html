@@ -53,6 +53,9 @@
   </div>
 
   <form class="" action="{{ url_for('shopping_checkout_page') }}" method="GET">
+    <input name="total" type="hidden" value="{{ total }}">
+    <input name="subtotal" type="hidden" value="{{ subtotal }}">
+    <input name="taxes" type="hidden" value="{{ taxes }}">
     <button type="submit" class="btn btn-secondary">Check Out</button>
   </form>
 

@@ -342,15 +342,21 @@ def delete_from_wishlist(id):
 #----------------------------
 # PROCESS PAYMENT HANDLERS  |
 #----------------------------
-@app.route('/shopping/checkout/',methods=['POST','GET']) #this is a test route to put in info before submitting payment
+@app.route('/shopping/checkout/',methods=['POST','GET']) #route for checking out, payment info, and shipping info before proccesing payment
 def shopping_checkout_page():
     try:
-        if session.get('proccessing') is False:
+        if session.get('proccessing') is False: #if proccessing is false, it means that the purchase is already been processed --> avoids click backs
             return redirect(url_for('shoppingcart'))
     except Exception:
         return redirect(url_for('shoppingcart'))
 
     if request.method == 'GET':
+        session['purchase_data'] = {
+            'total':request.args.get('total'),
+            'subtotal':request.args.get('subtotal'),
+            'tax':request.args.get('taxes'),
+        }
+        print(session)
         return render_template('testinginvoice.html')
     elif request.method == 'POST':
         return '<h1>405 Method Now Allowed</h1>',405
@@ -373,25 +379,26 @@ def process_the_payment():
         #SHIPPING INFO FROM WEBPAGE
         street = request.form.get('street')
         city = request.form.get('city')
-        state = request.form.get('state')
+        state = request.form.getlist('state')[0]
         zipcode = request.form.get('zipcode')
         country = request.form.get('country')
-        # price = request.form.get('price')
-        price = '$123'
+
         order = "%.9d" % random.randint(0,9999999999) #generate a random 10 digit invoice #
 
         #validate to see if the user is a member or guest
         if check_if_user_is_logged_in():
             cc = [cardnumber,date,csc]  # create a list with the cc information inside
             save_user_credit_card(session.get('id'),cc,'{} {}'.format(firstname,lastname)) #save the user's credit card information -- pass in user id and cc list
-            save_invoice(session.get('id'),order,date,'{} {}'.format(firstname,lastname),street,city,state,zipcode,country,price) #save the user's order in record
+            save_invoice(session.get('id'),order,date,'{} {}'.format(firstname,lastname),street,city,state,zipcode,country,session.get('purchase_data')['total']) #save the user's order in record
             info = get_the_user_submission_invoice(session.get('id'),order) #get the users order
             session['info'] = info #store the invoice info into the session
             return redirect(url_for('show_user_invoice'),code=302)#redirect to the invoice page, passing in the order number
-        else: # IF GUEST purchase -- return the invoice -- NEED TO FINISH
-            # return render_template('user/invoice.html',info=info)
-            return 'guest checkout'
-            pass
+        else:
+            items = get_list_of_items_based_on_ids(session.get('cart'),True)
+            save_invoice(100,order,date,'{} {}'.format(firstname,lastname),street,city,state,zipcode,country,session.get('purchase_data')['total']) #save the user's order in record
+            invoice = get_guest_submission_invoice(order)
+            session['info'] = {'invoice':invoice,'items': items}
+            return redirect(url_for('show_user_invoice'),code=302)
     elif request.method == 'GET':
         return '<h1>405 Method Now Allowed</h1>',405 #pass in not allowed method content and 405 status code
 
@@ -399,15 +406,18 @@ def process_the_payment():
 def show_user_invoice():
     try:
         info = session['info']
+        purchase_data = session['purchase_data']
         finish_processing()
     except Exception:
         return redirect(url_for('shoppingcart'))
-    return render_template('invoice.html',info=info['invoice'],items=info['items'])
+    return render_template('invoice.html',info=info['invoice'],items=info['items'],purchase=purchase_data)
 
 def finish_processing():#func to change the proccessing to False and delete the info after payment is processed
     try:
         session['proccessing'] = False
         del session['info']
+        del session['purchase_data']
+        del session['cart']
     except KeyError:
         return
 
@@ -416,7 +426,7 @@ def finish_processing():#func to change the proccessing to False and delete the 
 #----------------------------
 @app.route('/addtocart/<category>/<subcategory>/<int:id>') #route to add the item to the cart
 def add_to_cart(category, subcategory, id):
-    if session['cart']:
+    if session.get('cart'):
         quantity_item = list(session['quantity'])
         list_item = list(session['cart'])
         if id in session['cart']:
@@ -444,11 +454,11 @@ def shoppingcart():
     #cursor = con.cursor()
     subtotal = 0
     session['proccessing'] = True
-    print(session['cart'])
+    print(session)
     if check_if_user_is_logged_in():
         get_item_from_user_cart(session['id'])
 
-    if session['cart']:
+    if session.get('cart'):
         if check_if_user_is_logged_in():
             cart = get_item_to_cart_user(session['id'])
             print(cart)

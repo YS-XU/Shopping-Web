@@ -30,7 +30,7 @@ def get_the_users_wishlist(id): #function to get the user's wish list
     if not rv: #check if the tuple is empty, if it is return None
         return None
     else:
-        wishlist = get_the_wishlist_items_by_ids(rv)
+        wishlist = get_list_of_items_based_on_ids(rv)
         return wishlist
 
 def get_all_item_ids_from_wishlist(userid,userhome=False): #function to get a list of itemm ids inside the user's wishlist
@@ -53,12 +53,16 @@ def delete_item_from_wish_list(userid,itemid):
     sql = 'DELETE FROM Wishlist WHERE UserID={} AND ItemID={}'.format(userid,itemid)
     insert_or_delete_database(sql)
 
-def get_the_wishlist_items_by_ids(list): #function to get the items that is in the wishlist by the item Id
+def get_list_of_items_based_on_ids(list,guest=False): #function to get the items that is in the wishlist by the item Id
     cursor = get_cursor()
     item_ids = []
     sql = 'SELECT * from Item WHERE '
-    for i in list:
-        sql =  sql +  'ItemID={}'.format(i[1]) +' OR ' #go through the list of item ids and add it to the SQL
+    if guest:
+        for i in list:
+            sql =  sql +  'ItemID={}'.format(i) +' OR ' #go through the list of item ids and add it to the SQL
+    elif guest is False:
+        for i in list:
+            sql =  sql +  'ItemID={}'.format(i[1]) +' OR ' #go through the list of item ids and add it to the SQL
     sql = sql[0:len(sql)-3] #trim the sql to erase the last 'OR'
     cursor.execute(sql)
     list = cursor.fetchall()
@@ -110,10 +114,17 @@ def user_credit_card_exists(userid): #boolean func to check if the user credit c
         return True
     else:
         return False
+def get_guest_submission_invoice(orderid):
+    cursor = get_cursor()
+    #get the items from the user's CART
+    sql = 'SELECT * FROM Invoice WHERE OrderNumber={}'.format(orderid)
+    cursor.execute(sql)
+    invoice = cursor.fetchall()[0]
+    return invoice
 
 def get_the_user_submission_invoice(userid,ordernumber):
     cursor = get_cursor()
-    #get the items from the user;s CART
+    #get the items from the user's CART
     sql = 'SELECT * FROM Invoice WHERE OrderNumber={}'.format(ordernumber)
     cursor.execute(sql)
     invoice = cursor.fetchall()

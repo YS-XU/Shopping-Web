@@ -1,0 +1,74 @@
+
+* {box-sizing: border-box;
+
+margin: 0;
+}
+
+
+
+h1{
+  text-align: center;
+}
+
+
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+input{
+  border-top:none;
+  border-right:none;
+  border-left:none;
+  width:30rem;
+
+}
+select{
+  border-top: none;
+  border-right: none;
+  border-left: none;
+
+}
+
+.inputForms{
+  margin-left: 20%;
+}
+
+.size{
+    width:19rem;
+    margin-top: 3%;
+}
+.checkBox{
+display: block;
+}
+.sizeInputBottom{
+    width:9rem;
+    display: inline-block;
+}
+.displayInputBlock{
+  display:block;
+    margin-top: 3%;
+}
+.inputForms{
+  float: left;
+  margin-left: 12%;
+}
+.submitButton{
+  display:block;
+    margin-top: 3%;
+    background-color: black;
+    color: white;
+    height: 3em;
+}
+.rightSection{
+  width:220px;
+  float:right;
+  margin-right: 26%;
+}
+.InputRightSection{
+  margin-right: 22%;
+}
