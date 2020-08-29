@@ -4,10 +4,10 @@ from passlib.hash import sha256_crypt
 import os
 from application import app, mysql
 from flask_mysqldb import MySQL
-from dotenv import load_dotenv,find_dotenv
+#from dotenv import load_dotenv,find_dotenv
 from application.db.db import * #import everything from the db module
 
-load_dotenv(find_dotenv('.env')) #finds the .env file
+#load_dotenv(find_dotenv('.env')) #finds the .env file
 
 @app.route('/getdata') #route to test the database
 def data():
