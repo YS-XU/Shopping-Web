@@ -27,21 +27,20 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='css/checkout.css') }}"> {% endblock %}
 {% block content %}
 <h1>CHEKOUT</h1>
+
 <section class="inputForms">
-  <label for="name">1. SIGN IN </label>
-  <input type="text" id="name" name="name" required>
-  <label for="name">2. DELIVERY</label>
-  <input type="text" id="name" name="name" required>
-  <figcaption>we only ship to address within the united states</figcaption>
+  <label for="name"><h4><b>DELIVERY</b></h4></label>
   <form class="" action="/processpayment/" method="POST">
     <input class="size" type="text" name="firstname" placeholder="First Name" value="">
+    <p></p>
     <input class="size" type="text" name="lastname" placeholder="Last Name" value="">
+    <p></p>
+    <input class="size" type="text" name="email" placeholder="Email" value="">
+    <p></p>
     <input class="displayInputBlock" type="text" placeholder="Address" name="street" value="">
+    <p></p>
     <input type="displayInputBlock" name="" placeholder="Apt, suite, floor,etc(optional)" value="">
-    <div class="checkBox">
-      <!-- <input type="checkbox" id="scales" name="scales"> -->
-      <label for="scales">Scales</label>
-    </div>
+    <p></p>
     <input class="sizeInputBottom" type="text" name="zipcode" placeholder="Zip code" value="">
     <select name="state" id="pet-select">
       <option value="AL">Alabama</option>
@@ -53,17 +52,26 @@
       <option value="NC">North Carolina</option>
       <option value="MA">Massachuetts</option>
     </select> <input class="sizeInputBottom" type="text" name="city" placeholder="City" value="">
-    <input class="submitButton" type="submit" value="CONTINUE TO SHIPPING OPTIONS">
+    <p></p>
+    <label for="name"><h4><b>Payment</b></h4></label>
     <input type="text" name="cardnumber" value="" placeholder="Card Number">
+    <p></p>
+    <input type="text" name="nameofcard" value="" placeholder="Name of the Card">
+    <p></p>
     <input style="display:block;" type="text" name="date" value="" placeholder=Date>
+    <p></p>
     <input type="text" name="csc" value="" placeholder="CVV">
-    <input class="submitButton" type="submit" value="SUBMIT">
+    <p></p>
+    <input class="btn btn-secondary" type="submit" value="SUBMIT">
   </form>
 </section>
 
 <section class="rightSection">
-  <label for="name">ORDER SUMMARY </label>
-  <input class="InputRightSection" type="text" id="name" name="name" required>
+  <label for="name"><h4><b>Cart</b></h4></label>
+  <p class="hello">hello</p>
+  
 </section>
+
+
 
 {% endblock %}
