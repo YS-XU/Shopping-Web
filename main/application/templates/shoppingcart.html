@@ -56,7 +56,7 @@
     <input name="total" type="hidden" value="{{ total }}">
     <input name="subtotal" type="hidden" value="{{ subtotal }}">
     <input name="taxes" type="hidden" value="{{ taxes }}">
-    <button type="submit" class="btn btn-secondary">Check Out</button>
+    <button {{ '' if cart else 'disabled' }} type="submit" class="btn btn-secondary">Check Out</button>
   </form>
 
 </div>

@@ -4,10 +4,11 @@ from passlib.hash import sha256_crypt
 import os
 from application import app, mysql
 from flask_mysqldb import MySQL
-#from dotenv import load_dotenv,find_dotenv
+from dotenv import load_dotenv,find_dotenv
 from application.db.db import * #import everything from the db module
+from application.email.email import send_out_email_after_purchase
 
-#load_dotenv(find_dotenv('.env')) #finds the .env file
+load_dotenv(find_dotenv('.env')) #finds the .env file
 
 @app.route('/getdata') #route to test the database
 def data():
@@ -407,10 +408,17 @@ def show_user_invoice():
     try:
         info = session['info']
         purchase_data = session['purchase_data']
+        print('purchase data',purchase_data)
+        #send the email to the user after they have purchased
+        try:
+            send_out_email_after_purchase(purchase_data,session['email'])
+        except Exception as e:
+            print(e)
         finish_processing()
     except Exception:
         return redirect(url_for('shoppingcart'))
     return render_template('invoice.html',info=info['invoice'],items=info['items'],purchase=purchase_data)
+
 
 def finish_processing():#func to change the proccessing to False and delete the info after payment is processed
     try:
