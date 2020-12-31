@@ -358,7 +358,21 @@ def shopping_checkout_page():
             'tax':request.args.get('taxes'),
         }
         print(session)
-        return render_template('testinginvoice.html')
+        
+        if session.get('cart'):
+            if check_if_user_is_logged_in():
+                cart = get_item_to_cart_user(session['id'])
+                print(cart)
+            else:
+                cart = get_item_to_cart_guest(session['cart'], session['quantity'])
+                print(cart)
+        else:
+            cart = None
+        
+        total = request.args.get('total')
+        subtotal = request.args.get('subtotal')
+        taxes = request.args.get('taxes')       
+        return render_template('testinginvoice.html', cart=cart, subtotal=subtotal, taxes = taxes, total=total)
     elif request.method == 'POST':
         return '<h1>405 Method Now Allowed</h1>',405
 

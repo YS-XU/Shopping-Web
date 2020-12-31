@@ -73,6 +73,29 @@ display: block;
   margin-right: 22%;
 }
 
-.hello{
-  color: red;
+.row-cols-2{
+  background-color: rgb(232, 232, 235);
+ 
+}
+
+.col{
+  margin-bottom: 3%;
+  font-size: large;
+}
+
+.prices{
+  text-align: right;
+}
+
+.total-prices{
+  font-size: large;
+  font-weight: bold;
+}
+
+.cart-img{
+  width: 25%;
+}
+
+.card-img-clothing{
+  width: 100%;
 }

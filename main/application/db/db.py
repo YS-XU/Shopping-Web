@@ -205,7 +205,7 @@ def add_item_to_guest_cart(itemid, cart, quantity):
 def add_item_to_user_cart(userid, itemid, quantity):
     print(userid)
     print(itemid)
-    if check_if_item_already_exist_in_cart(userid,itemid): #check if the item already exist in the wishlist, return if returns true
+    if check_if_item_already_exist_in_cart(userid,itemid): #check if the item already exist in the cart, return if returns true
         increase_quantity_user(itemid, userid)
     else:
         sql = "INSERT INTO Cart (UserID, ItemID, Quantity) VALUES ({}, {}, {})".format(userid, itemid, quantity)

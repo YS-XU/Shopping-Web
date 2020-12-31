@@ -27,50 +27,93 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='css/checkout.css') }}"> {% endblock %}
 {% block content %}
 <h1>CHEKOUT</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <label for="name"><h4><b>DELIVERY</b></h4></label>
+      <form class="" action="/processpayment/" method="POST">
+        <input class="size" type="text" name="firstname" placeholder="First Name" value="">
+        <p></p>
+        <input class="size" type="text" name="lastname" placeholder="Last Name" value="">
+        <p></p>
+        <input class="size" type="text" name="email" placeholder="Email" value="">
+        <p></p>
+        <input class="displayInputBlock" type="text" placeholder="Address" name="street" value="">
+        <p></p>
+        <input type="displayInputBlock" name="" placeholder="Apt, suite, floor,etc(optional)" value="">
+        <p></p>
+        <input class="sizeInputBottom" type="text" name="zipcode" placeholder="Zip code" value="">
+        <select name="state" id="pet-select">
+          <option value="AL">Alabama</option>
+          <option value="IN">Indiana</option>
+          <option value="MY">Maryland</option>
+          <option value="MN"> Minnesota</option>
+          <option value="MI">Missouri</option>
+          <option value="NH">New Hampshires</option>
+          <option value="NC">North Carolina</option>
+          <option value="MA">Massachuetts</option>
+        </select> <input class="sizeInputBottom" type="text" name="city" placeholder="City" value="">
+        <p></p>
+        <label for="name"><h4><b>Payment</b></h4></label>
+        <input type="text" name="cardnumber" value="" placeholder="Card Number">
+        <p></p>
+        <input type="text" name="nameofcard" value="" placeholder="Name of the Card">
+        <p></p>
+        <input style="display:block;" type="text" name="date" value="" placeholder=Date>
+        <p></p>
+        <input type="text" name="csc" value="" placeholder="CVV">
+        <p></p>
+        <input class="btn btn-secondary" type="submit" value="SUBMIT">
+    
+      </form>
+    </div>
 
-<section class="inputForms">
-  <label for="name"><h4><b>DELIVERY</b></h4></label>
-  <form class="" action="/processpayment/" method="POST">
-    <input class="size" type="text" name="firstname" placeholder="First Name" value="">
-    <p></p>
-    <input class="size" type="text" name="lastname" placeholder="Last Name" value="">
-    <p></p>
-    <input class="size" type="text" name="email" placeholder="Email" value="">
-    <p></p>
-    <input class="displayInputBlock" type="text" placeholder="Address" name="street" value="">
-    <p></p>
-    <input type="displayInputBlock" name="" placeholder="Apt, suite, floor,etc(optional)" value="">
-    <p></p>
-    <input class="sizeInputBottom" type="text" name="zipcode" placeholder="Zip code" value="">
-    <select name="state" id="pet-select">
-      <option value="AL">Alabama</option>
-      <option value="IN">Indiana</option>
-      <option value="MY">Maryland</option>
-      <option value="MN"> Minnesota</option>
-      <option value="MI">Missouri</option>
-      <option value="NH">New Hampshires</option>
-      <option value="NC">North Carolina</option>
-      <option value="MA">Massachuetts</option>
-    </select> <input class="sizeInputBottom" type="text" name="city" placeholder="City" value="">
-    <p></p>
-    <label for="name"><h4><b>Payment</b></h4></label>
-    <input type="text" name="cardnumber" value="" placeholder="Card Number">
-    <p></p>
-    <input type="text" name="nameofcard" value="" placeholder="Name of the Card">
-    <p></p>
-    <input style="display:block;" type="text" name="date" value="" placeholder=Date>
-    <p></p>
-    <input type="text" name="csc" value="" placeholder="CVV">
-    <p></p>
-    <input class="btn btn-secondary" type="submit" value="SUBMIT">
-  </form>
-</section>
 
-<section class="rightSection">
-  <label for="name"><h4><b>Cart</b></h4></label>
-  <p class="hello">hello</p>
-  
-</section>
+    <div class="col-4">
+      <label for="name"><h4><b>Cart</b></h4></label>
+
+      <div class="row">
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Item</th>
+              <th scope="col">Quantities</th>
+              <th scope="col">Prices</th>
+            </tr>
+          </thead>
+    
+          {% for item in cart %}
+          <tbody>
+            <tr>
+              <th class="cart-img" scope="row"><img class="card-img-clothing" src="{{ url_for('static', filename='img/' + item[3] + '/' + item[4] + '/' + item[5]) }}" alt="Card image cap"></th>
+              <td>{{ item[1] }}</td>
+              <td>
+                <a href="/decrease_quantity/{{ item[0] }}"><button type="button" class="btn btn-outline-secondary">-</button></a>
+                {{ item[6] }}
+                <a href="/increase_quantity/{{ item[0] }}"><button type="button" class="btn btn-outline-secondary">+</button></a>
+              </td>
+              <td>${{ item[2] }}</td>
+            </tr>
+    
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+
+      <div class="row row-cols-2">
+        <div class="col">Subtotal</div>
+        <div class="col prices">${{ subtotal }}</div>
+        <div class="col">Taxes</div>
+        <div class="col prices">${{ taxes }}</div>
+        <div class="col total-prices">Total</div>
+        <div class="col prices total-prices">${{ total }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 
