@@ -8,16 +8,16 @@ load_dotenv(find_dotenv('.env')) #finds the .env file
 
 
 # function to send the email to the user
-def send_out_email_after_purchase(purchase_data,receiver_email):
+def send_out_email_after_purchase(purchase_data,receiver_email,invoice_num):
     sender_email = os.environ.get('GMAIL_SENDER')
     password = os.environ.get('GMAIL_PASSWORD') 
-
+    print(sender_email,password)
     total_price = purchase_data['total']
     subtotal = purchase_data['subtotal']
     tax = purchase_data['tax'] 
 
     message = MIMEMultipart("alternative")
-    message["Subject"] = "multipart test"
+    message["Subject"] = "Thank you for your order. Invoice #: {}".format(invoice_num)
     message["From"] = sender_email
     message["To"] = receiver_email
 

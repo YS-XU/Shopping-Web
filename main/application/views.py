@@ -421,11 +421,12 @@ def process_the_payment():
 def show_user_invoice():
     try:
         info = session['info']
+        print(info)
         purchase_data = session['purchase_data']
         print('purchase data',purchase_data)
         #send the email to the user after they have purchased
         try:
-            send_out_email_after_purchase(purchase_data,session['email'])
+            send_out_email_after_purchase(purchase_data,session['email'],info['invoice'][1])
         except Exception as e:
             print(e)
         finish_processing()
